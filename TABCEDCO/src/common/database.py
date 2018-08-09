@@ -1,14 +1,24 @@
+import os
+
 import pymongo
 
 
 class Database(object):
-    URI = "mongodb://127.0.0.1:27017"
+    URI = os.environ['MONGODB_URI']
     DATABASE = None
 
     @staticmethod
     def initialize():
         client = pymongo.MongoClient(Database.URI)
-        Database.DATABASE = client['TABCEDCO']
+        Database.DATABASE = client['heroku_sc2xc25q']
+
+    # URI = "mongodb://127.0.0.1:27017"
+    # DATABASE = None
+    #
+    # @staticmethod
+    # def initialize():
+    #     client = pymongo.MongoClient(Database.URI)
+    #     Database.DATABASE = client['TABCEDCO']
 
     @staticmethod
     def insert(collection, data):
@@ -26,7 +36,7 @@ class Database(object):
     def update_receipt(collection, query, invoice_date, nature_of_transaction, account_head, bank_account, amount,
                        user_id, user_name, doc_account_head, cheque_number, payment_voucher, depositing_bank,
                        adjustment_voucher, voucher_date, ledger, cleared, cheque_date, narration):
-        
+
         return Database.DATABASE[collection].update_one(query, {'$set': {'invoice_date': invoice_date,
                                                                          'cheque_date': cheque_date,
                                                                          'nature_of_transaction': nature_of_transaction,
