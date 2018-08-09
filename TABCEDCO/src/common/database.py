@@ -26,6 +26,7 @@ class Database(object):
     def update_receipt(collection, query, invoice_date, nature_of_transaction, account_head, bank_account, amount,
                        user_id, user_name, doc_account_head, cheque_number, payment_voucher, depositing_bank,
                        adjustment_voucher, voucher_date, ledger, cleared, cheque_date, narration):
+        
         return Database.DATABASE[collection].update_one(query, {'$set': {'invoice_date': invoice_date,
                                                                          'cheque_date': cheque_date,
                                                                          'nature_of_transaction': nature_of_transaction,
