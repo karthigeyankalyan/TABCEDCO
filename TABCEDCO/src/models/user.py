@@ -13,19 +13,19 @@ class User(object):
 
     @classmethod
     def get_by_email(cls, email):
-        data = Database.find_one('users', {'email': email})
+        data = Database.find_one('usersTabcedco', {'email': email})
         if data is not None:
             return cls(**data)
 
     @classmethod
     def get_by_username(cls, username):
-        data = Database.find_one('users', {'username': username})
+        data = Database.find_one('usersTabcedco', {'username': username})
         if data is not None:
             return cls(**data)
 
     @classmethod
     def get_by_id(cls, _id):
-        data = Database.find_one('users', {'_id': _id})
+        data = Database.find_one('usersTabcedco', {'_id': _id})
         if data is not None:
             return cls(**data)
 
@@ -66,4 +66,4 @@ class User(object):
         }
 
     def save_to_mongo(self):
-        Database.insert("users", self.json())
+        Database.insert("usersTabcedco", self.json())
