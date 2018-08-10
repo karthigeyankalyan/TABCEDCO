@@ -56,8 +56,10 @@ def login_user():
     if valid:
         if user.department == 'Accounts':
             return render_template('profile_accounts.html', user=user)
-        else:
+        elif user.department == 'Loans':
             return render_template('profile_loans.html', user=user)
+        else:
+            return render_template('profile_HQ.html', user=user)
 
     else:
         return render_template('login_fail.html')
@@ -77,8 +79,10 @@ def register_user():
 
     if user.department == 'Accounts':
         return render_template('profile_accounts.html', user=user)
-    else:
+    elif user.department == 'Loans':
         return render_template('profile_loans.html', user=user)
+    else:
+        return render_template('profile_HQ.html', user=user)
 
 
 @app.route('/new_receipt/<string:user_id>', methods=['POST', 'GET'])
