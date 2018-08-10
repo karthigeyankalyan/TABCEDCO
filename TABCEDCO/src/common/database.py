@@ -19,7 +19,7 @@ class Database(object):
     # def initialize():
     #     client = pymongo.MongoClient(Database.URI)
     #     Database.DATABASE = client['TABCEDCO']
-    #
+
     @staticmethod
     def insert(collection, data):
         Database.DATABASE[collection].insert(data)
