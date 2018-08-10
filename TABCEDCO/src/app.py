@@ -36,8 +36,10 @@ def profile():
     if email:
         if user.department == 'Accounts':
             return render_template('profile_accounts.html', user=user)
-        else:
+        elif user.department == 'Loans':
             return render_template('profile_loans.html', user=user)
+        else:
+            return render_template('profile_HQ.html', user=user)
 
     else:
         return render_template('login_fail.html')
