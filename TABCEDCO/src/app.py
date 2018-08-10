@@ -12,6 +12,7 @@ from src.models.user import User
 app = Flask(__name__)  # main
 app.secret_key = "commercial"
 
+
 @app.before_first_request
 def initialize_database():
     Database.initialize()
