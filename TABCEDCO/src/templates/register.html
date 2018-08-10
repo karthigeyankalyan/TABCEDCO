@@ -28,7 +28,7 @@
         <div class="form-group">
             <label for="department">Department</label>
               <select class="form-control" id="department" name="department">
-                {% set designation = ['Loans', 'Accounts'] %}
+                {% set designation = ['Loans', 'Accounts', 'HQ Staff'] %}
                 {% for ch in designation %}
                     <option value= "{{ch}}">{{ch}}</option>"
                 {% endfor %}
