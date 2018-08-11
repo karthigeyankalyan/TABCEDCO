@@ -58,7 +58,7 @@
                 if (json[0]['loan_category'] === 'GTL' || json[0]['loan_category'] === 'NSS') {
                     doc.setFontSize(10);
 
-                    var PSO = 254 + '/' + json[0]['loan_category'] + '/' +
+                    var PSO = json[0]['loan_number'] + '/' + json[0]['loan_category'] + '/' +
                         // Creating financial Year (For e.g. 1718, 1819)
                         (moment(json[0]['received_date']).year() - 2000) + '' +
                         (moment(json[0]['received_date']).year() - 1999);
@@ -449,22 +449,24 @@
                 console.log(json);
                     // Checking if the loan category is either Micro Credit or Mahila Samriddhi Yojana
                     if (json[0]['loan_category'] === 'MCL' || json[0]['loan_category'] === 'MSY') {
-                        var PSO = json[0]['ann_loan_id'] + '/' + json[0]['loan_category'] + '/' + (moment(json[0]['received_date']).year() - 2000) + '' + (moment(json[0]['received_date']).year() - 1999);
+                        var PSO = json[0]['loan_number'] + '/' + json[0]['loan_category'] + '/' + (moment(json[0]['received_date']).year() - 2000) + '' + (moment(json[0]['received_date']).year() - 1999);
+
+                        var sanction_amount = (NBCFDCShareCalculator(json[0]['loan_category'], json[0]['loan_amount'])+ tabcedcoShareCalculator(json[0]['loan_category'], json[0]['loan_amount']));
 
                         doc.setFontSize(12);
-                        doc.text(167, 20, PSO);
+                        doc.text(150, 20, PSO);
 
                         doc.setFontSize(10);
                         doc.text(30, 30, 'PROCEEDINGS OF THE MANAGING DIRECTOR, TAMIL NADU BACKWARD CLASSES');
                         doc.text(45, 35, 'ECONOMIC DEVELOPMENT CORPORATION LIMITED, CHENNAI-8.');
 
                         doc.text(65, 45, 'PRESENT: '+ MD +'., I.A.S.');
-                        doc.text(25, 55, 'Proc.No.' + json[0]['ann_loan_id'] + '/' + json[0]['district'] + '/0410/2018/' + json[0]['bank']);
+                        doc.text(25, 55, 'Proc.No.' + json[0]['ann_loan_id'] + '/' + json[0]['district'] + (moment(json[0]['received_date']).format("DDMM/YYYY")) + json[0]['bank']);
 
                         doc.text(160, 55, 'Dated: ' + (moment(json[0]['received_date']).format("DD-MM-YYYY")));
                         doc.text(37, 65, 'Sub:  Tamil Nadu Backward Classes Economic Development Corporation Ltd., Chennai 600008');
                         doc.text(46, 70, 'Disbursement of Loan under ' + json[0]['loan_category'] + ' Payment sanctioned to ' + json[0]["no_of_beneficiaries"] + ' beneficiaries');
-                        doc.text(46, 75, 'through ' + json[0]["district_bank"] + ' - Final Sanction Order for Rs. ' + parseInt(NBCFDCShareCalculator(json[0]['loan_category'], json[0]['loan_amount']))+ parseInt(tabcedcoShareCalculator(json[0]['loan_category'], json[0]['loan_amount'])) + ' - issued - Reg.');
+                        doc.text(46, 75, 'through ' + json[0]["district_bank"] + ' - Final Sanction Order for Rs. ' + (NBCFDCShareCalculator(json[0]['loan_category'], json[0]['loan_amount'])+ tabcedcoShareCalculator(json[0]['loan_category'], json[0]['loan_amount'])) + ' - issued - Reg.');
 
                         doc.text(37, 85, 'Ref:  1. The Deed of Agreement Dated: _______');
                         doc.text(46, 90, '2. The Joint Registrar of Co-Operative Societies, ' + json[0]['district'] + '.');
@@ -475,13 +477,13 @@
                         doc.text(25, 120, 'ORDER:');
                         var pt1 = doc.splitTextToSize('1.   In the reference 1st cited, ' + json[0]['bank'] + ', ' + json[0]['district'] + ' District ' +
                             'has entered into an agreement with TABCEDCO for the implementation of ' + json[0]['loan_category'] +
-                            'so as to benefit the members of Self Help Group (Women)  belonging to Backward/Most Backward Classes' +
-                            'and De-notified Communities in ' + json[0]['district'] + ' District ', 160);
+                            ' so as to benefit the members of Self Help Group (Women)  belonging to Backward/Most Backward Classes' +
+                            ' and De-notified Communities in ' + json[0]['district'] + ' District ', 160);
                         doc.text(34, 125, pt1);
 
                         var pt2 = doc.splitTextToSize('2.   In the reference 2nd cited,the proposals have been submitted by the Joint Registrar of' +
-                            'Coop. Societies, ' + json[0]['district'] + ' District, with the recommendation for sanction of' +
-                            'loan as detailed below:', 160);
+                            ' Coop. Societies, ' + json[0]['district'] + ' District, with the recommendation for sanction of' +
+                            ' loan as detailed below:', 160);
                         doc.text(34, 145, pt2);
 
                         doc.text(40, 160, 'DETAILS OF LOAN SANCTIONED TO MEMBERS OF SELF HELP GROUP');
@@ -495,29 +497,27 @@
 
                         for (var i = 1; i <= parseInt(json[0]['no_of_shgs']); i++) {
                             var shgString = 'shg' + i;
-                            rows.push([[json[0]['bank']], [[json[0][shgString].name]], [[json[0][shgString].strength]], [[json[0][shgString].amount]]]);
+                            rows.push([[json[0]['bank']], [[json[0][shgString].name]], [[json[0][shgString].strength]], [(NBCFDCShareCalculator(json[0]['loan_category'], json[0][shgString].amount)+ tabcedcoShareCalculator(json[0]['loan_category'], json[0][shgString].amount))]]);
                             total_strength += parseInt(json[0][shgString].strength);
                         }
 
-                        rows.push([[['Grand Total']], [['']], [[total_strength]], [[json[0]['loan_amount']]]]);
-                        doc.autoTable(columns, rows, {startY: 175, endY: 200});
+                        rows.push([[['Grand Total']], [['']], [[total_strength]], [[sanction_amount]]]);
+                        doc.autoTable(columns, rows, {startY: 170, endY: 200});
 
                         doc.addPage();
 
-                        var pt3 = doc.splitTextToSize('3. Accordingly sanction is hereby accorded for the payment of Rs.' + parseInt(NBCFDCShareCalculator(json[0]['loan_category'], json[0]['loan_amount']))+ parseInt(tabcedcoShareCalculator(json[0]['loan_category'], json[0]['loan_amount'])) + '/-' +
-                            'to the ' + json[0]['district'] + ' district through the ' + json[0]['bank'] + 'for the disbursement of loan under ' +
+                        var pt3 = doc.splitTextToSize('3. Accordingly sanction is hereby accorded for the payment of Rs.' + sanction_amount + '/-' +
+                            ' to the ' + json[0]['district'] + ' district through the ' + json[0]['bank'] + ' for the disbursement of loan under ' +
                             json[0]['loan_category'], 160);
 
                         doc.text(34, 30, pt3);
 
-                        var sanction_amount = parseInt(NBCFDCShareCalculator(json[0]['loan_category'], json[0]['loan_amount']))+ parseInt(tabcedcoShareCalculator(json[0]['loan_category'], json[0]['loan_amount']));
-
                         //Assigning Rate of Interest
-                        var ROI = json[0]['roi']*100+'%';
+                        var ROI = json[0]['roi']+'%';
 
                         var columns1 = ["# of SHGs", "# of beneficiaries", "Rate of Interest", "Loan Amount"];
                         var rows1 = [];
-                        rows1.push([[json[0]['no_of_shgs']], [total_strength], [(ROI * 100) + '%'], [json[0]['loan_amount']]]);
+                        rows1.push([[json[0]['no_of_shgs']], [total_strength], [ROI], [sanction_amount]]);
 
                         doc.autoTable(columns1, rows1, {startY: 40, endY: 200});
 
@@ -559,7 +559,7 @@
 
                     // Checking if application is either GTL or New Swarnima Scheme
                     else if (json[0]['loan_category'] === 'GTL' || json[0]['loan_category'] === 'NSS') {
-                        PSO = 254 + '/' + json[0]['loan_category'] + '/' + (moment(json[0]['received_date']).year() - 2000) + '' + (moment(json[0]['received_date']).year() - 1999);
+                        PSO = json[0]['loan_number'] + '/' + json[0]['loan_category'] + '/' + (moment(json[0]['received_date']).year() - 2000) + '' + (moment(json[0]['received_date']).year() - 1999);
 
                         doc.setFontSize(12);
                         doc.text(167, 20, PSO);
@@ -728,7 +728,7 @@
                     doc.text(45, 99, ref);
 
                     doc.text(100, 105, '**********');
-                    var sanctioned_amount = parseInt(NBCFDCShareCalculator(json[0]['loan_category'], json[0]['loan_amount'])) + parseInt(tabcedcoShareCalculator(json[0]['loan_category'], json[0]['loan_amount']));
+                    var sanctioned_amount = (NBCFDCShareCalculator(json[0]['loan_category'], json[0]['loan_amount']) + tabcedcoShareCalculator(json[0]['loan_category'], json[0]['loan_amount']));
 
                     var pt1 = doc.splitTextToSize('1.   In Continuation of this office Sanction Proceedings cited, we are ' +
                         'enclosing herewith a Cheque bearing No:,'+json[0]['cheque_number']+'Dated:________for '+
@@ -744,21 +744,21 @@
 
                     else {
                         pt2 = doc.splitTextToSize('2.   We request you to disburse the amount to the'+json[0]['no_of_shgs']+
-                            'SHGs as per the conditions accepted by them.', 140);
+                            ' SHGs as per the conditions accepted by them.', 140);
                     }
 
-                    doc.text(45, 140, pt2);
+                    doc.text(45, 130, pt2);
 
                     var pt3 = doc.splitTextToSize('3.   Disbursement of Loan to the concerned'+ json[0]['bank']
-                        +'may be informed to this office at the earliest.', 140);
+                        +' may be informed to this office at the earliest.', 140);
 
-                    doc.text(45, 160, pt3);
+                    doc.text(45, 150, pt3);
 
                     var pt4 = doc.splitTextToSize('4.   We are also enclosing herewith the repayment schedule, ' +
                         'in order to repay the amount on the respective due dates strictly and we also request you to ' +
                         'send the Utilisation Certificate in the prescribed format immediately.', 140);
 
-                    doc.text(45, 180, pt4);
+                    doc.text(45, 170, pt4);
 
                     doc.text(160, 200, 'Yours Faithfully,');
                     doc.text(160, 215, 'for Managing Director');

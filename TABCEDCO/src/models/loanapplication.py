@@ -12,7 +12,8 @@ class LoanApplication(object):
                  n7=None, s7=None, a7=None, n8=None, s8=None, a8=None, n9=None, s9=None, a9=None, n10=None, s10=None,
                  a10=None, no_of_beneficiaries=None, _id=None, no_of_shgs=None, app1=None, app2=None, app3=None,
                  app4=None, app5=None, app6=None, app7=None, app8=None, app9=None, app10=None, cheque_number=None,
-                 sub_bank=None, final_collection_amount=None, amount_yet_to_pay=None, father_name=None, screening_date=None):
+                 sub_bank=None, final_collection_amount=None, amount_yet_to_pay=None, father_name=None,
+                 screening_date=None, loan_number=None):
         self.applicant_name = applicant_name
         self.father_name = father_name
         self.loan_category = loan_category
@@ -97,6 +98,7 @@ class LoanApplication(object):
         self.cheque_number = cheque_number
         self.final_collection_amount = final_collection_amount
         self.amount_yet_to_pay = int(loan_amount)
+        self.loan_number = int(loan_number)
         self._id = uuid.uuid4().hex if _id is None else _id
 
     def save_to_mongo(self):
@@ -108,7 +110,7 @@ class LoanApplication(object):
                         ann_loan_id, user_id, user_name, loan_id, n1, s1, a1, n2, s2, a2, n3, s3, a3, n4, s4, a4,
                         n5, s5, a5, n6, s6, a6, n7, s7, a7, n8, s8, a8, n9, s9, a9, n10, s10, a10, no_of_beneficiaries,
                         no_of_shgs, app1, app2, app3, app4, app5, app6, app7, app8, app9, app10, cheque_number,
-                        amount_to_pay, father_name):
+                        amount_to_pay, father_name, loan_number):
         Database.update_application(collection='loans', query={'_id': loan_id}, applicant_name=applicant_name,
                                     loan_category=loan_category, age=age, gender=gender, address=address, roi=roi,
                                     district=district, annual_income=annual_income, caste=caste, bank=bank, sb=sub_bank,
@@ -120,7 +122,8 @@ class LoanApplication(object):
                                     n10=n10, s10=s10, a10=a10, no_of_beneficiaries=no_of_beneficiaries,
                                     no_of_shgs=no_of_shgs, app1=app1, app2=app2, app3=app3, app4=app4, app5=app5,
                                     app6=app6, app7=app7, app8=app8, app9=app9, app10=app10,
-                                    cheque_number=cheque_number, amount_to_pay=amount_to_pay, father_name=father_name)
+                                    cheque_number=cheque_number, amount_to_pay=amount_to_pay, father_name=father_name,
+                                    loan_number=loan_number)
 
     @classmethod
     def update_pend_amount(cls, amount_yet_to_be_paid, loan_id):
@@ -151,6 +154,7 @@ class LoanApplication(object):
             'status_date': self.status_date,
             'ann_loan_id': self.ann_loan_id,
             'loan_amount': self.loan_amount,
+            'loan_number': self.loan_number,
             'amount_yet_to_pay': self.amount_yet_to_pay,
             'final_collection_amount': self.final_collection_amount,
             'roi': self.roi,

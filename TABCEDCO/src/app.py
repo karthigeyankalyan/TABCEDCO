@@ -493,6 +493,7 @@ def loan_form(user_id):
             sub_bank = request.form['subBank']
             loan_reason = request.form['loanReason']
             loan_amount = request.form['loanAmount']
+            loanNumber = request.form['loanNumber']
             received_date = request.form['receivedDate']
             screening_date = request.form['screeningDate']
             roi = request.form['interest']
@@ -589,7 +590,7 @@ def loan_form(user_id):
                                           app1=app1, app2=app2, app3=app3, app4=app4, app5=app5, app6=app6, app7=app7,
                                           app8=app8, app9=app9, app10=app10, cheque_number=cheque_number,
                                           sub_bank=sub_bank, roi=roi, no_of_demands=no_of_demands,
-                                          father_name=applicant_father_name, screening_date=screening_date)
+                                          father_name=applicant_father_name, screening_date=screening_date, loan_number=loanNumber)
 
             application.save_to_mongo()
 
@@ -622,6 +623,7 @@ def update_loan_form(_id):
             sub_bank = request.form['subBank']
             loan_reason = request.form['loanReason']
             loan_amount = request.form['loanAmount']
+            loanNumber = request.form['loanNumber']
             received_date = request.form['receivedDate']
             roi = request.form['interest']
             no_of_demands = request.form['noOfDemands']
@@ -732,7 +734,8 @@ def update_loan_form(_id):
                                             app1=app1, app2=app2, app3=app3, app4=app4, app5=app5, app6=app6, app7=app7,
                                             app8=app8, app9=app9, app10=app10, loan_id=_id, cheque_number=cheque_number,
                                             roi=roi, no_of_demands=no_of_demands, sub_bank=sub_bank,
-                                            amount_to_pay=amount_to_pay, father_name=applicant_father_name)
+                                            amount_to_pay=amount_to_pay, father_name=applicant_father_name,
+                                            loan_number=loanNumber)
 
             return render_template('application_added.html', user=user)
 
