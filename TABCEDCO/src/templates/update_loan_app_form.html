@@ -282,10 +282,7 @@
                     document.getElementsByName("n"+i).value = json[0][shgString].name;
                     document.getElementsByName("s"+i).value = json[0][shgString].strength;
                     document.getElementsByName("a"+i).value = json[0][shgString].amount;
-                    console.log(json[0][shgString].amount);
-                    console.log(document.getElementsByName("a"+i));
                 }
-
         },
             error: function (e) {
                 alert("error");
