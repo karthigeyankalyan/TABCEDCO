@@ -58,6 +58,8 @@
                 if (json[0]['loan_category'] === 'GTL (General Term Loan)' || json[0]['loan_category'] === 'NSS (New-Swarnima Scheme)') {
                     doc.setFontSize(10);
 
+                    console.log(json);
+
                     var PSO = json[0]['loan_number'] + '/' + json[0]['loan_category'] + '/' +
                         // Creating financial Year (For e.g. 1718, 1819)
                         (moment(json[0]['received_date']).year() - 2000) + '' +
@@ -92,7 +94,6 @@
 
                     doc.text(37, 120, para1);
 
-                    console.log(json[0]['applicant_name']);
                     var paraStr2 = 'Beneficiaries ' + json[0]['applicant_name'] + ' and ' + parseInt(json.length) - 1 + ' other beneficiaries. Loan Amount of Rs. '+sanction_amount;
 
                     var para2 = doc.splitTextToSize(paraStr2, 160);
