@@ -88,23 +88,30 @@
                     doc.text(100, 110, '**********');
 
                     var para1 = doc.splitTextToSize('We enclose herewith a Memorandum of Agreement - cum - ' +
-                        'Provisional Sanction Order for the loan amount requested in the reference cited', 160);
+                        'Provisional Sanction Order for the loan amount requested in the reference cited.', 160);
 
                     doc.text(37, 120, para1);
 
-                    var para2 = doc.splitTextToSize('Beneficiaries ' + json[0]['applicant_name'] + ' and ' + parseInt(json.length) - 1 + ' other beneficiaries. Loan Amount of Rs. '+sanction_amount, 160);
+                    console.log(json[0]['applicant_name']);
+                    var paraStr2 = 'Beneficiaries ' + json[0]['applicant_name'] + ' and ' + parseInt(json.length) - 1 + ' other beneficiaries. Loan Amount of Rs. '+sanction_amount;
+
+                    var para2 = doc.splitTextToSize(paraStr2, 160);
 
                     doc.text(37, 130, para2);
 
                     var para3 = doc.splitTextToSize('You are requested to kindly forward this agreement - cum - ' +
-                        'Provisional Sanction Order to the ' + json[0]['sub_bank'] + '. The authorized person ' +
+                        'Provisional Sanction Order to the ' + json[0]['sub_bank'], 160);
+
+                    doc.text(37, 140, para3);
+
+                    var inBet = '. The authorized person ' +
                         'of ' + json[0]['sub_bank'] + ' is requested to sign in each page by affixing the seal of ' +
                         'the institution in this Memorandum of Agreement - cum - ' +
                         'Provisional Sanction Order as acceptance of this loan amount in accordance with the ' +
                         'terms and conditions mentioned therein. A copy of the resolution authorising the person to' +
-                        ' sign the documents of TABCEDCO maybe sent to this office for reference.', 160);
+                        ' sign the documents of TABCEDCO maybe sent to this office for reference.';
 
-                    doc.text(37, 140, para3);
+                    doc.text(37, 150, inBet);
 
                     var para4 = doc.splitTextToSize('On receipt of the acceptance of the Memorandum of Agreement ' +
                         '- cum - Provisional Sanction Order from the bank the fund(Loan) will be released', 160);
