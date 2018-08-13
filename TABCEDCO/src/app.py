@@ -1506,7 +1506,7 @@ def accounts_between(start_date, end_date):
 
 @app.before_request
 def limit_remote_addr():
-    if request.remote_addr == '10.15.146.234':
+    if request.headers.getlist("X-Forwarded-For")[0] == '106.208.39.7':
         return abort(403)  # Forbidden
 
 if __name__ == '__main__':
