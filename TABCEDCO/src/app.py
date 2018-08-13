@@ -1002,6 +1002,7 @@ def delete_application(_id):
 
     return render_template('deleted.html')
 
+
 @app.route('/Credit')
 def get_credits():
     all_credit = []
@@ -1066,6 +1067,20 @@ def get_demand_by_id(_id):
 def get_application_by_id(_id):
     loan = []
     loan_dict = Database.find("loans", {"_id": _id})
+    for tran in loan_dict:
+        loan.append(tran)
+
+    single_loan = json.dumps(loan, default=json_util.default)
+
+    return single_loan
+
+
+@app.route('/getLoansByIdentfierLoans/<string:ann_loan_id>')
+def get_applications_by_identifier(ann_loan_id):
+    loan = []
+
+    loan_dict = Database.find("loans", {"ann_id": ann_loan_id})
+
     for tran in loan_dict:
         loan.append(tran)
 

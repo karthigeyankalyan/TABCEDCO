@@ -47,7 +47,7 @@
     function downloadPSO() {
     var doc = new jsPDF();
     var MD = 'N. Venkatachalam';
-    var source = "/loan/"+"{{application_id}}";
+    var source = "/getLoansByIdentfierLoans/"+"{{annual_loan_id}}";
     $.ajax({
         type: 'GET',
         url: source,
