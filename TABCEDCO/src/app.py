@@ -856,9 +856,8 @@ def update_loan_financial_form(_id):
             cheque_number = request.form['chequeNumber']
             cheque_date = request.form['chequeDate']
             principal_demand = int(request.form['demandPrincipalPayable'])
-            principal_collected = int(request.form['demandPrincipalPaid'])
             interest_demand = int(request.form['demandInterestPayable'])
-            interest_collected = int(request.form['demandInterestPaid'])
+            chequeAmount = int(request.form['totalChequeAmount'])
 
             demand_date1 = (datetime.combine(datetime.strptime(demand_date, '%Y-%m-%d').date(),
                                              datetime.now().time()))
@@ -880,7 +879,7 @@ def update_loan_financial_form(_id):
             if int(demand_number) == 1:
                 days_delayed = (cheque_date1 - demand_date1).days
                 opening_balance_principal_ndue = loan_amount
-                total_paid = principal_collected                        #+interest_collected
+                total_paid = principal_demand       #+interest_collected
                 if days_delayed > 0:
                     penal_interest = (days_delayed*total_paid*5)/(365*100)
                     belated_interest = (days_delayed*total_paid*roi)/(365 * 100)
@@ -891,7 +890,8 @@ def update_loan_financial_form(_id):
             else:
                 demand_numberm1 = int(demand_number)-1
 
-                demandm1 = Database.find("Demands", {"demand_number": str(demand_numberm1)})
+                demandm1 = Database.find("Demands", {"$and": [{"demand_number": str(demand_numberm1)},
+                                                              {"loan_id": loan_id}]})
 
                 for result_object in demandm1[0:1]:
                     opening_balance_principal_ndue = int(result_object['closing_balance_principal_ndue'])
@@ -921,7 +921,17 @@ def update_loan_financial_form(_id):
                 penal_interest = penal_interest_old_due+penal_interest_current_demand
                 belated_interest = belated_interest_old_due+belated_interest_current_demand
 
+            if (chequeAmount - (penal_interest+belated_interest)) >= interest_demand:
+                interest_collected = interest_demand
+            else:
+                interest_collected = chequeAmount - (penal_interest+belated_interest)
             closing_balance_interest_due = interest_demand-interest_collected
+
+            if (chequeAmount - (penal_interest+belated_interest+interest_collected)) > 0:
+                principal_collected = chequeAmount - (penal_interest+belated_interest+interest_collected)
+            else:
+                principal_collected = 0
+
             principal_collected1 = principal_collected - (penal_interest+belated_interest)
             closing_balance_principal_due = principal_demand-principal_collected1
             closing_balance_principal_ndue = opening_balance_principal_ndue-original_principal_demand
@@ -1504,10 +1514,10 @@ def accounts_between(start_date, end_date):
     return accounts_final
 
 
-@app.before_request
-def limit_remote_addr():
-    if request.headers.getlist("X-Forwarded-For")[0] == '106.208.39.7':
-        return abort(403)  # Forbidden
+# @app.before_request
+# def limit_remote_addr():
+#     if request.headers.getlist("X-Forwarded-For")[0] == '106.208.39.7':
+#         return abort(403)  # Forbidden
 
 if __name__ == '__main__':
     app.run(port=4065, debug=True)
