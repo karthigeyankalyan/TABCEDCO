@@ -13,7 +13,7 @@ class LoanApplication(object):
                  a10=None, no_of_beneficiaries=None, _id=None, no_of_shgs=None, app1=None, app2=None, app3=None,
                  app4=None, app5=None, app6=None, app7=None, app8=None, app9=None, app10=None, cheque_number=None,
                  sub_bank=None, final_collection_amount=None, amount_yet_to_pay=None, father_name=None,
-                 screening_date=None, loan_number=None):
+                 screening_date=None, loan_number=None, jr_letter_date=None, jr_letter_number=None):
         self.applicant_name = applicant_name
         self.father_name = father_name
         self.loan_category = loan_category
@@ -26,6 +26,13 @@ class LoanApplication(object):
         self.bank = bank
         self.sub_bank = sub_bank
         self.loan_reason = loan_reason
+        self.jr_letter_number = jr_letter_number
+
+        if jr_letter_date:
+            self.jr_letter_date = (datetime.combine(datetime.strptime(jr_letter_date, '%Y-%m-%d').date(),
+                                                    datetime.now().time()))
+        else:
+            self.jr_letter_date = jr_letter_date
 
         if received_date:
             self.received_date = (datetime.combine(datetime.strptime(received_date, '%Y-%m-%d').date(),
@@ -152,6 +159,8 @@ class LoanApplication(object):
             'screening_date': self.screening_date,
             'status': self.status,
             'status_date': self.status_date,
+            'jr_letter_date': self.jr_letter_date,
+            'jr_letter_number': self.jr_letter_number,
             'ann_loan_id': self.ann_loan_id,
             'loan_amount': self.loan_amount,
             'loan_number': self.loan_number,

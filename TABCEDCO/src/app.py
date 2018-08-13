@@ -500,6 +500,8 @@ def loan_form(user_id):
             no_of_demands = request.form['noOfDemands']
             status = request.form['status']
             status_date = request.form['statusDate']
+            jr_letter_date = request.form['jrLetterDate']
+            jr_letter_number = request.form['jrLetterNumber']
             ann_loan_id = request.form['annualLoanID']
             no_of_shgs = request.form['shgCount']
             user_id = user_id
@@ -590,7 +592,9 @@ def loan_form(user_id):
                                           app1=app1, app2=app2, app3=app3, app4=app4, app5=app5, app6=app6, app7=app7,
                                           app8=app8, app9=app9, app10=app10, cheque_number=cheque_number,
                                           sub_bank=sub_bank, roi=roi, no_of_demands=no_of_demands,
-                                          father_name=applicant_father_name, screening_date=screening_date, loan_number=loanNumber)
+                                          father_name=applicant_father_name, screening_date=screening_date,
+                                          loan_number=loanNumber, jr_letter_date=jr_letter_date,
+                                          jr_letter_number=jr_letter_number)
 
             application.save_to_mongo()
 

@@ -80,7 +80,7 @@
                     doc.text(37, 75, sub);
 
                     var ref = doc.splitTextToSize('Ref:  The Joint Registrar of Co-Operative Societies ' +
-                        json[0]['district'] + ' LR. No. ________________  Dated: ___________, Screening Committee Date: ' + moment(json[0]['screening_date']['$date']).format('YYYY-MM-DD'), 140);
+                        json[0]['district'] + ' LR. No. '+json[0]['jr_letter_number'] +' Dated: '+moment(json[0]['jr_letter_date']['$date']).format('YYYY-MM-DD') +' Screening Committee Date: ' + moment(json[0]['screening_date']['$date']).format('YYYY-MM-DD'), 140);
 
                     doc.text(37, 95, ref);
                     doc.text(100, 110, '**********');
