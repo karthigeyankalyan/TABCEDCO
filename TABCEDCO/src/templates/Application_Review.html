@@ -55,7 +55,7 @@
         dataType: 'json',
         success: function (json) {
             if(json.length !== 0) {
-                if (json[0]['loan_category'] === 'GTL' || json[0]['loan_category'] === 'NSS') {
+                if (json[0]['loan_category'] === 'GTL (General Term Loan)' || json[0]['loan_category'] === 'NSS (New-Swarnima Scheme)') {
                     doc.setFontSize(10);
 
                     var PSO = json[0]['loan_number'] + '/' + json[0]['loan_category'] + '/' +
@@ -448,7 +448,7 @@
             if(json.length !== 0) {
                 console.log(json);
                     // Checking if the loan category is either Micro Credit or Mahila Samriddhi Yojana
-                    if (json[0]['loan_category'] === 'MCL' || json[0]['loan_category'] === 'MSY') {
+                    if (json[0]['loan_category'] === 'MCG (Micro-Credit Gents)' || json[0]['loan_category'] === 'MSY (Mahila Samriddhi Yojana)') {
                         var PSO = json[0]['loan_number'] + '/' + json[0]['loan_category'] + '/' + (moment(json[0]['received_date']).year() - 2000) + '' + (moment(json[0]['received_date']).year() - 1999);
 
                         var sanction_amount = (NBCFDCShareCalculator(json[0]['loan_category'], json[0]['loan_amount'])+ tabcedcoShareCalculator(json[0]['loan_category'], json[0]['loan_amount']));
@@ -557,8 +557,8 @@
 
                     }
 
-                    // Checking if application is either GTL or New Swarnima Scheme
-                    else if (json[0]['loan_category'] === 'GTL' || json[0]['loan_category'] === 'NSS') {
+                    // Checking if application is either GTL (General Term Loan) or New Swarnima Scheme
+                    else if (json[0]['loan_category'] === 'GTL (General Term Loan)' || json[0]['loan_category'] === 'NSS (New-Swarnima Scheme)') {
                         PSO = json[0]['loan_number'] + '/' + json[0]['loan_category'] + '/' + (moment(json[0]['received_date']).year() - 2000) + '' + (moment(json[0]['received_date']).year() - 1999);
 
                         doc.setFontSize(12);
@@ -737,7 +737,7 @@
 
                     doc.text(45, 110, pt1);
 
-                    if(json[0]['loan_category'] === 'GTL' || json[0]['loan_category'] === 'NSS') {
+                    if(json[0]['loan_category'] === 'GTL (General Term Loan)' || json[0]['loan_category'] === 'NSS (New-Swarnima Scheme)') {
                         var pt2 = doc.splitTextToSize('2.   We request you to disburse the amount to '+json[0]['applicant_name']+
                             ' as per the conditions accepted by them.', 140);
                     }
@@ -786,7 +786,7 @@
     }
 
     function interestCalculator(category, amount) {
-        if (category === 'GTL') {
+        if (category === 'GTL (General Term Loan)') {
             if (amount <= 500000) {
                 return 0.07;
             }
@@ -794,7 +794,7 @@
                 return 0.06;
             }
         }
-        else if (category === 'NSS' || category === 'MCL') {
+        else if (category === 'NSS (New-Swarnima Scheme)' || category === 'MCG (Micro-Credit Gents)') {
             return 0.05;
         }
         else {
@@ -806,10 +806,10 @@
      * @return {number}
      */
     function NBCFDCShareCalculator(category, amount) {
-        if (category === 'GTL') {
+        if (category === 'GTL (General Term Loan)') {
             return amount*0.85;
         }
-        else if (category === 'NSS' || category === 'MSY') {
+        else if (category === 'NSS (New-Swarnima Scheme)' || category === 'MSY (Mahila Samriddhi Yojana)') {
             return amount*.95;
         }
         else {
@@ -821,10 +821,10 @@
      * @return {number}
      */
     function tabcedcoShareCalculator(category, amount) {
-        if (category === 'GTL') {
+        if (category === 'GTL (General Term Loan)') {
             return amount*0.10;
         }
-        else if (category === 'NSS' || category === 'MSY') {
+        else if (category === 'NSS (New-Swarnima Scheme)' || category === 'MSY (Mahila Samriddhi Yojana)') {
             return amount*0.05;
         }
         else {
@@ -836,7 +836,7 @@
      * @return {number}
      */
     function beneficiaryShareCalculator(category, amount) {
-        if (category === 'GTL' || category === 'MCL') {
+        if (category === 'GTL (General Term Loan)' || category === 'MCG (Micro-Credit Gents)') {
             return amount*0.05;
         }
         else {
@@ -845,7 +845,7 @@
     }
 
     function calculateRepaymentPeriod(category, amount) {
-        if (category === 'GTL' || category === 'NSS') {
+        if (category === 'GTL (General Term Loan)' || category === 'NSS (New-Swarnima Scheme)') {
             if (amount <= 25000) {
                 return 3;
             }
@@ -885,10 +885,10 @@
                 document.getElementById("cardLoanReason").innerHTML = "Nature of Business: "+json[0]['loan_reason'];
 
                 // SHG Card
-                if (json[0]['loan_category'] === 'GTL' || json[0]['loan_category'] === 'NSS') {
+                if (json[0]['loan_category'] === 'GTL (General Term Loan)' || json[0]['loan_category'] === 'NSS (New-Swarnima Scheme)') {
                     document.getElementById("cardSHG").innerHTML = "Applicant Name: "+json[0]['applicant_name'];
                 }
-                else if (json[0]['loan_category'] === 'MCL' || json[0]['loan_category'] === 'MSY') {
+                else if (json[0]['loan_category'] === 'MCG (Micro-Credit Gents)' || json[0]['loan_category'] === 'MSY (Mahila Samriddhi Yojana)') {
                     document.getElementById("cardSHG").innerHTML = "Number of SHGs: "+json[0]['no_of_shgs'];
                 }
 
