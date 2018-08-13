@@ -94,12 +94,11 @@
 
                     doc.text(37, 120, para1);
 
-//                    var paraStr2 = 'Beneficiaries ' + json[0]['applicant_name'] + ' and ' + parseInt(json.length) - 1 + ' other beneficiaries. Loan Amount of Rs. '+sanction_amount;
-//
-//                    var para2 = doc.splitTextToSize(paraStr2, 160);
-//
-//                    doc.text(37, 130, para2);
-//
+                    var paraStr2 = 'Beneficiaries ' + json[0]['applicant_name'] + ' and ' + parseInt(json.length) - 1 + ' other beneficiaries. Loan Amount of Rs. '+sanction_amount;
+
+                    var para2 = doc.splitTextToSize(paraStr2, 160);
+
+                    doc.text(37, 130, para2);
 
                     var para3 = doc.splitTextToSize('You are requested to kindly forward this agreement - cum - ' +
                         'Provisional Sanction Order to the ' + json[0]['sub_bank'], 160);
