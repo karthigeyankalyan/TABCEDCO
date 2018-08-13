@@ -2,7 +2,7 @@ from datetime import datetime
 
 import pymongo
 from bson import json_util
-from flask import Flask, render_template, request, session, json
+from flask import Flask, render_template, request, session, json, abort
 from src.common.database import Database
 from src.models.accounts import Account
 from src.models.loan_financials import Demand
@@ -1501,6 +1501,12 @@ def accounts_between(start_date, end_date):
     accounts_final = json.dumps(accounts, default=json_util.default)
 
     return accounts_final
+
+
+@app.before_request
+def limit_remote_addr():
+    if request.remote_addr != '117.193.53.11':
+        return abort(403)  # Forbidden
 
 if __name__ == '__main__':
     app.run(port=4065, debug=True)
