@@ -63,7 +63,7 @@
         <input type="number" id="annualIncome" name="annualIncome" style="display: block; width: 100%">
         <label for="caste">Caste</label>
         <select class="form-control" id="caste" name="caste">
-            {% set castes = ['BC', 'MBC'] %}
+            {% set castes = ['BC', 'MBC', 'DNC'] %}
             {% for caste in castes %}
                 <option value= "{{caste}}">{{caste}}</option>"
             {% endfor %}

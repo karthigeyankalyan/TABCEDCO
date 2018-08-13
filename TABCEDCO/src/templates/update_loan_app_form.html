@@ -6,8 +6,8 @@
 
     <div class="form-group" style="display: block; width: 38%">
         <label for="loanCategory">Loan Category</label>
-        <select class="form-control" id="loanCategory" name="loanCategory" onchange="categorySelection(this)" onload="categorySelection(this)">
-            {% set categories = ['GTL', 'NSS', 'MCL', 'MSY'] %}
+        <select class="form-control" id="loanCategory" name="loanCategory" onchange="categorySelection(this)">
+            {% set categories = ['GTL (General Term Loan)', 'NSS (New-Swarnima Scheme)', 'MCG (Micro-Credit Gents)', 'MSY (Mahila Samriddhi Yojana)'] %}
             {% for category in categories %}
                 <option value= "{{category}}">{{category}}</option>"
             {% endfor %}
@@ -62,7 +62,7 @@
         <input type="number" id="annualIncome" name="annualIncome" style="display: block; width: 100%">
         <label for="caste">Caste</label>
         <select class="form-control" id="caste" name="caste">
-            {% set castes = ['BC', 'MBC'] %}
+            {% set castes = ['BC', 'MBC', 'DNC'] %}
             {% for caste in castes %}
                 <option value= "{{caste}}">{{caste}}</option>"
             {% endfor %}
@@ -70,7 +70,7 @@
     </div>
 
     <div class="form-group" style="display: block; width: 38%">
-        <label for="bankName">Name of Bank</label>
+        <label for="bankName">District Bank</label>
         <input type="text" id="bankName" name="bankName" style="display: block; width: 100%">
 
         <label for="subBank">Sub Bank</label>
@@ -161,12 +161,10 @@
     </div>
 
     <div id="BenCount" style="display: none;">
-        <label for="beneficiaryCount"></label>
+        <label for="beneficiaryCount">Beneficiary Count</label>
         <input type="number" id="beneficiaryCount" name="beneficiaryCount">
-    </div>
 
-    <div id="shgC" style="display: none;">
-        <label for="shgCount"></label>
+        <label for="shgCount">SHG Count</label>
         <input type="number" id="shgCount" name="shgCount">
     </div>
 
@@ -178,6 +176,21 @@
         <div style="margin-left: 10px">
             <label for="receivedDate">Application Received Date</label>
             <input type="date" id="receivedDate" name="receivedDate">
+        </div>
+        <div style="margin-left: 10px">
+            <label for="screeningDate">Screening Committee Date</label>
+            <input type="date" id="screeningDate" name="screeningDate">
+        </div>
+    </div>
+
+    <div class="form-group" style="display: flex; flex-direction: row; justify-content: space-between;">
+        <div>
+            <label for="jrLetterNumber">JR Letter Number</label>
+            <input type="text" id="jrLetterNumber" name="jrLetterNumber">
+        </div>
+        <div style="margin-left: 10px">
+            <label for="jrLetterDate">JR Letter Date</label>
+            <input type="date" id="jrLetterDate" name="jrLetterDate">
         </div>
     </div>
 
@@ -214,7 +227,7 @@
             <input type="text" id="annualLoanID" name="annualLoanID">
         </div>
         <div>
-            <label for="loanNumber">Loan Number</label>
+            <label for="loanNumber">PSO Number</label>
             <input type="number" id="loanNumber" name="loanNumber">
         </div>
     </div>
