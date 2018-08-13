@@ -63,7 +63,7 @@
                         (moment(json[0]['received_date']).year() - 2000) + '' +
                         (moment(json[0]['received_date']).year() - 1999);
 
-                    doc.text(150, 20, 'PSO: '+PSO);
+                    doc.text(140, 20, 'PSO: '+PSO);
                     doc.text(25, 30, 'Proc.No.' + json[0]['ann_loan_id'] + '/' + json[0]['district'] + '/'+json[0]['bank']);
                     doc.text(160, 30, 'Dated: ' + (moment(json[0]['received_date']['$date']).format("DD-MM-YYYY")));
 
@@ -124,14 +124,14 @@
 
                     doc.addPage();
 
-                    doc.text(167, 20, PSO);
+                    doc.text(140, 20, 'PSO: '+PSO);
 
                     doc.setFontSize(10);
                     doc.text(30, 30, 'PROCEEDINGS OF THE MANAGING DIRECTOR, TAMIL NADU BACKWARD CLASSES');
                     doc.text(45, 35, 'ECONOMIC DEVELOPMENT CORPORATION LIMITED, CHENNAI-8.');
 
                     doc.text(65, 45, 'PRESENT: THIRU.' + MD + '.,I.A.S.');
-                    doc.text(25, 55, 'Proc.No.' + json[0]['ann_loan_id'] + '/' + json[0]['district'] + '/0410/2018/' + json[0]['bank']);
+                    doc.text(25, 55, 'Proc.No.' + json[0]['ann_loan_id'] + '/' + json[0]['district'] + '/' + json[0]['bank']);
 
                     doc.text(160, 55, 'Dated: ' + (moment(json[0]['received_date']).format("DD-MM-YYYY")));
 
