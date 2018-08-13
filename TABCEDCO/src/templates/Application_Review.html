@@ -165,13 +165,13 @@
 
                     doc.text(100, 150, 'Annexure I');
 
-                    columns = ["Details", "Business", "Amount", "Repayment",
-                        "NBCFDC", "RoI", "TABCEDCO", "RoI", "Beneficiary"];
+                    columns = ["Details", "Business", "Amount", "Repayment [Yrs]",
+                        "NBCFDC Share", "RoI", "TABCEDCO Share", "RoI", "Beneficiary Share"];
                     rows = [];
 
                     for (iter = 0; iter < json.length; iter++) {
                         rows.push([[json[iter]['applicant_name'], json[iter]['father_name'], json[iter]['address']], [json[iter]['loan_reason']], [json[iter]['loan_amount']],
-                            [calculateRepaymentPeriod(json[iter]['loan_category'], json[iter]['loan_amount'])], [NBCFDCShareCalculator(json[iter]['loan_category'], json[iter]['loan_amount'])],
+                            [parseInt(json[iter]['no_of_demands'])/4], [NBCFDCShareCalculator(json[iter]['loan_category'], json[iter]['loan_amount'])],
                             [json[0]['roi'] + '%'],
                             [tabcedcoShareCalculator(json[iter]['loan_category'], json[iter]['loan_amount'])], [json[0]['roi'] + '%'],
                             [beneficiaryShareCalculator(json[iter]['loan_category'], json[iter]['loan_amount'])]]);
@@ -941,7 +941,7 @@
         }
         words_string = words_string.split("  ").join(" ");
     }
-    return words_string+" Rupees Only";
+    return "Rupees "+words_string+" Only";
 }
 
     var source = "/loan/"+"{{application_id}}";
