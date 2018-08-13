@@ -94,23 +94,23 @@
 
                     doc.text(37, 120, para1);
 
-                    var paraStr2 = 'Beneficiaries ' + json[0]['applicant_name'] + ' and ' + parseInt(json.length) - 1 + ' other beneficiaries. Loan Amount of Rs. '+sanction_amount;
+                    var paraStr2 = 'Beneficiaries '+ json[0]['applicant_name'] + ' Loan Amount of Rs. '+sanction_amount;
 
                     var para2 = doc.splitTextToSize(paraStr2, 160);
 
                     doc.text(37, 130, para2);
 
                     var para3 = doc.splitTextToSize('You are requested to kindly forward this agreement - cum - ' +
-                        'Provisional Sanction Order to the ' + json[0]['sub_bank'], 160);
+                        'Provisional Sanction Order to the ' + json[0]['sub_bank']+'.', 160);
 
                     doc.text(37, 140, para3);
 
-                    var inBet = '. The authorized person ' +
+                    var inBet = doc.splitTextToSize('The authorized person ' +
                         'of ' + json[0]['sub_bank'] + ' is requested to sign in each page by affixing the seal of ' +
                         'the institution in this Memorandum of Agreement - cum - ' +
                         'Provisional Sanction Order as acceptance of this loan amount in accordance with the ' +
                         'terms and conditions mentioned therein. A copy of the resolution authorising the person to' +
-                        ' sign the documents of TABCEDCO maybe sent to this office for reference.';
+                        ' sign the documents of TABCEDCO maybe sent to this office for reference.');
 
                     doc.text(37, 150, inBet);
 
@@ -268,6 +268,11 @@
                     doc.text(25, 90, concl);
                     doc.text(165, 140, 'Managing Director');
 
+                    doc.text(25, 150, 'ACCEPTED');
+
+                    doc.text(25, 160, 'Signature of The Authority');
+
+                    doc.text(25, 170, 'Seal of the Bank/Society');
                     doc.save('PSO' + PSO + '.pdf')
                 }
                 else {
