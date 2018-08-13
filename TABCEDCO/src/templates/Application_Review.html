@@ -110,7 +110,7 @@
                         'the institution in this Memorandum of Agreement - cum - ' +
                         'Provisional Sanction Order as acceptance of this loan amount in accordance with the ' +
                         'terms and conditions mentioned therein. A copy of the resolution authorising the person to' +
-                        ' sign the documents of TABCEDCO maybe sent to this office for reference.');
+                        ' sign the documents of TABCEDCO maybe sent to this office for reference.', 160);
 
                     doc.text(37, 150, inBet);
 
@@ -191,7 +191,7 @@
                     doc.autoTable(columns, rows, {
                         startY: 160,
                         styles: {overflow: 'linebreak', fontSize: 8},
-                        columnStyles: {0: {columnWidth: 45}}
+                        columnStyles: {0: {columnWidth: 40}, 2: {columnWidth: 10}, 7: {columnWidth: 10}}
                     });
 
                     columns1 = ["Contribution", "Total Amount", "ROI"];
