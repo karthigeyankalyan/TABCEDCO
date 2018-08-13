@@ -20,7 +20,7 @@ def initialize_database():
 
 @app.route('/')
 def home():
-    remote_address = request.remote_addr
+    remote_address = request.headers.getlist("X-Forwarded-For")[0]
     return render_template('home.html', remote_address=remote_address)
 
 
