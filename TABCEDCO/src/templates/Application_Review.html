@@ -90,8 +90,7 @@
 
                     doc.text(37, 120, para1);
 
-                    var para2 = doc.splitTextToSize('Beneficiaries ' + json[0]['applicant_name'] + ' ' +
-                        'and ' + json.length - 1 + ' other beneficiaries', 160);
+                    var para2 = doc.splitTextToSize('Beneficiaries ' + json[0]['applicant_name'] + ' and ' + parseInt(json.length) - 1 + ' other beneficiaries', 160);
 
                     doc.text(37, 130, para2);
 
