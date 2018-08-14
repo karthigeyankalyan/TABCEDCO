@@ -79,7 +79,7 @@
 
                     var sanction_amount = (NBCFDCShareCalculator(json[0]['loan_category'], json[0]['loan_amount'])+ tabcedcoShareCalculator(json[0]['loan_category'], json[0]['loan_amount']));
 
-                    doc.text(140, 20, 'PSO: '+PSO);
+                    doc.text(160, 20, 'PSO: '+PSO);
                     doc.text(25, 30, 'Proc.No.' + json[0]['ann_loan_id'] + '/' + json[0]['district'] + '/'+json[0]['bank']);
                     doc.text(160, 30, 'Dated: ' + (moment(json[0]['received_date']['$date']).format("DD-MM-YYYY")));
 
@@ -131,7 +131,7 @@
 
                     doc.text(37, 170, para4);
 
-                    doc.text(165, 190, 'Yours Faithfully,');
+                    doc.text(165, 185, 'Yours Faithfully,');
                     doc.text(165, 200, 'For Managing Director');
 
                     doc.text(25, 210, 'Enclosed as Above. Copy to:');
@@ -146,7 +146,7 @@
 
                     doc.addPage();
 
-                    doc.text(140, 20, 'PSO: '+PSO);
+                    doc.text(160, 20, 'PSO: '+PSO);
 
                     doc.setFontSize(10);
                     doc.text(30, 30, 'PROCEEDINGS OF THE MANAGING DIRECTOR, TAMIL NADU BACKWARD CLASSES');
