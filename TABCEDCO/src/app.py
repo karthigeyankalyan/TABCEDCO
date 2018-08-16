@@ -606,7 +606,7 @@ def loan_form(user_id):
 
 
 @app.route('/addAnotherApplication/<string:_id>', methods=['POST', 'GET'])
-def loan_form(_id):
+def add_another_loan_form(_id):
     email = session['email']
     if email is not None:
         if request.method == 'GET':
