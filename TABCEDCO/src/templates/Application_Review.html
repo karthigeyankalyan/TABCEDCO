@@ -479,11 +479,24 @@
         contentType: "application/json",
         dataType: 'json',
         success: function (json) {
+            if(json[0]['loan_category'] === 'GTL (General Term Loan)') {
+                var cat = "GTL";
+            }
+            else if(json[0]['loan_category'] === 'NSS (New-Swarnima Scheme)') {
+                cat = "NSS";
+            }
+            else if(json[0]['loan_category'] === 'MCG (Micro-Credit Gents)') {
+                cat = "MCR";
+            }
+            else if(json[0]['loan_category'] === 'MSY (Mahila Samriddhi Yojana)') {
+                cat = "MSY";
+            }
+
             if(json.length !== 0) {
                 console.log(json);
                     // Checking if the loan category is either Micro Credit or Mahila Samriddhi Yojana
                     if (json[0]['loan_category'] === 'MCG (Micro-Credit Gents)' || json[0]['loan_category'] === 'MSY (Mahila Samriddhi Yojana)') {
-                        var PSO = json[0]['loan_number'] + '/' + json[0]['loan_category'] + '/' + (moment(json[0]['received_date']).year() - 2000) + '' + (moment(json[0]['received_date']).year() - 1999);
+                        var PSO = json[0]['loan_number'] + '/' + cat + '/' + (moment(json[0]['received_date']).year() - 2000) + '' + (moment(json[0]['received_date']).year() - 1999);
 
                         var sanction_amount = (NBCFDCShareCalculator(json[0]['loan_category'], json[0]['loan_amount'])+ tabcedcoShareCalculator(json[0]['loan_category'], json[0]['loan_amount']));
 
@@ -593,7 +606,7 @@
 
                     // Checking if application is either GTL (General Term Loan) or New Swarnima Scheme
                     else if (json[0]['loan_category'] === 'GTL (General Term Loan)' || json[0]['loan_category'] === 'NSS (New-Swarnima Scheme)') {
-                        PSO = json[0]['loan_number'] + '/' + json[0]['loan_category'] + '/' + (moment(json[0]['received_date']).year() - 2000) + '' + (moment(json[0]['received_date']).year() - 1999);
+                        PSO = json[0]['loan_number'] + '/' + cat + '/' + (moment(json[0]['received_date']).year() - 2000) + '' + (moment(json[0]['received_date']).year() - 1999);
 
                         doc.setFontSize(12);
                         doc.text(167, 20, PSO);
