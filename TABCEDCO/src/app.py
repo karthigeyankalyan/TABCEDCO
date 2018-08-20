@@ -20,8 +20,8 @@ def initialize_database():
 
 @app.route('/')
 def home():
-    remote_address = request.headers.getlist("X-Forwarded-For")[0]
-    return render_template('home.html', remote_address=remote_address)
+    # remote_address = request.headers.getlist("X-Forwarded-For")[0]
+    return render_template('home.html')
 
 
 @app.route('/login')
@@ -765,6 +765,9 @@ def update_loan_form(_id):
             loanNumber = request.form['loanNumber']
             received_date = request.form['receivedDate']
             roi = request.form['interest']
+            screening_date = request.form['screeningDate']
+            jr_letter_date = request.form['jrLetterDate']
+            jr_letter_number = request.form['jrLetterNumber']
             no_of_demands = request.form['noOfDemands']
             status = request.form['status']
             status_date = request.form['statusDate']
@@ -874,9 +877,10 @@ def update_loan_form(_id):
                                             app8=app8, app9=app9, app10=app10, loan_id=_id, cheque_number=cheque_number,
                                             roi=roi, no_of_demands=no_of_demands, sub_bank=sub_bank,
                                             amount_to_pay=amount_to_pay, father_name=applicant_father_name,
-                                            loan_number=loanNumber)
+                                            loan_number=loanNumber, screening_date=screening_date,
+                                            jr_letter_number=jr_letter_number, jr_letter_date=jr_letter_date)
 
-            return render_template('application_added.html', user=user)
+            return render_template('application_added_update.html', user=user, application_id=_id)
 
     else:
         return render_template('login_fail.html')

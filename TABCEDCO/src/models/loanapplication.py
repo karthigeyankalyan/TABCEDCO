@@ -117,7 +117,32 @@ class LoanApplication(object):
                         ann_loan_id, user_id, user_name, loan_id, n1, s1, a1, n2, s2, a2, n3, s3, a3, n4, s4, a4,
                         n5, s5, a5, n6, s6, a6, n7, s7, a7, n8, s8, a8, n9, s9, a9, n10, s10, a10, no_of_beneficiaries,
                         no_of_shgs, app1, app2, app3, app4, app5, app6, app7, app8, app9, app10, cheque_number,
-                        amount_to_pay, father_name, loan_number):
+                        amount_to_pay, father_name, loan_number, jr_letter_date, jr_letter_number, screening_date):
+
+        if received_date:
+            received_date = (datetime.combine(datetime.strptime(received_date, '%Y-%m-%d').date(),
+                                              datetime.now().time()))
+        else:
+            received_date = received_date
+
+        if screening_date:
+            screening_date = (datetime.combine(datetime.strptime(screening_date, '%Y-%m-%d').date(),
+                                               datetime.now().time()))
+        else:
+            screening_date = screening_date
+
+        if jr_letter_date:
+            jr_letter_date = (datetime.combine(datetime.strptime(jr_letter_date, '%Y-%m-%d').date(),
+                                               datetime.now().time()))
+        else:
+            jr_letter_date = jr_letter_date
+
+        if status_date:
+            status_date = (datetime.combine(datetime.strptime(status_date, '%Y-%m-%d').date(),
+                                            datetime.now().time()))
+        else:
+            status_date = status_date
+
         Database.update_application(collection='loans', query={'_id': loan_id}, applicant_name=applicant_name,
                                     loan_category=loan_category, age=age, gender=gender, address=address, roi=roi,
                                     district=district, annual_income=annual_income, caste=caste, bank=bank, sb=sub_bank,
@@ -130,7 +155,8 @@ class LoanApplication(object):
                                     no_of_shgs=no_of_shgs, app1=app1, app2=app2, app3=app3, app4=app4, app5=app5,
                                     app6=app6, app7=app7, app8=app8, app9=app9, app10=app10,
                                     cheque_number=cheque_number, amount_to_pay=amount_to_pay, father_name=father_name,
-                                    loan_number=loan_number)
+                                    loan_number=loan_number, jr_letter_date=jr_letter_date, jr_letter_number=jr_letter_number,
+                                    screening_date=screening_date)
 
     @classmethod
     def update_pend_amount(cls, amount_yet_to_be_paid, loan_id):
