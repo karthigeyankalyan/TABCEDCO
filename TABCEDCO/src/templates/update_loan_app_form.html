@@ -278,6 +278,7 @@
             contentType: "application/json",
             dataType: 'json',
             success: function (json) {
+                console.log(json);
                 document.getElementById("loanCategory").value = json[0]["loan_category"];
                 document.getElementById("applicantName").value = json[0]["applicant_name"];
                 document.getElementById("applicantFatherName").value = json[0]["father_name"];
@@ -294,8 +295,12 @@
                 document.getElementById("loanReason").value = json[0]["loan_reason"];
                 document.getElementById("loanAmount").value = json[0]["loan_amount"];
                 document.getElementById("status").value = json[0]["status"];
+                document.getElementById("jrLetterNumber").value = json[0]["jr_letter_number"];
                 document.getElementById("annualLoanID").value = json[0]["ann_loan_id"];
                 document.getElementById("receivedDate").value = moment(json[0]["received_date"]['$date']).format("YYYY-MM-DD");
+                document.getElementById("statusDate").value = moment(json[0]["status_date"]['$date']).format("YYYY-MM-DD");
+                document.getElementById("jrLetterDate").value = moment(json[0]["jr_letter_date"]['$date']).format("YYYY-MM-DD");
+                document.getElementById("screeningDate").value = moment(json[0]["screening_date"]['$date']).format("YYYY-MM-DD");
                 for(var i=1; i<10; i++){
                     var shgString = 'shg' + i;
                     document.getElementsByName("n"+i).value = json[0][shgString].name;
