@@ -75,6 +75,7 @@
                             $("#loansList").append(tbl);
                             var hr = "<tr>";
                             var th1 = "<th style='text-align:center;vertical-align:middle'>" + "Applicant Name" + "</th>";
+                            var th10 = "<th style='text-align:center;vertical-align:middle'>" + "PSO #" + "</th>";
                             var th2 = "<th style='text-align:center;vertical-align:middle'>" + "District" + "</th>";
                             var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Bank" + "</th>";
                             var th4 = "<th style='text-align:center;vertical-align:middle'>" + "Loan Reason" + "</th>";
@@ -83,7 +84,7 @@
                             var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Edit Application" + "</th>";
                             var th8 = "<th style='text-align:center;vertical-align:middle'>" + "Add Financial" + "</th>";
                             var th9 = "<th style='text-align:center;vertical-align:middle'>" + "Update Financial" + "</th>";
-                            $("#loansDetails").append(hr + th1 + th2 + th3 + th4 + th5 + th6 + th7 + th8 + th9);
+                            $("#loansDetails").append(hr + th1 + th2 + th3 + th4 + th5 + th6 + th7 + th8 + th9 + th10);
                             for (var j = 0; j < jsonFunc.length; j++) {
                                 {
                                     var loan_id = jsonFunc[j]["_id"];
@@ -92,6 +93,7 @@
                                     var url2 = '/ViewDemandsByLoan/'+loan_id;
                                     var row = $('<tr></tr>').html('<td>' +
                                         jsonFunc[j]["applicant_name"] + '</td>'+
+                                        '<td>'+jsonFunc[j]["ann_loan_id"] +'</td>'+
                                         '<td>'+jsonFunc[j]["district"] +'</td>'+
                                         '<td>'+jsonFunc[j]["bank"] +'</td>'+
                                         '<td>'+jsonFunc[j]["loan_reason"] +'</td>'+
@@ -119,7 +121,7 @@
         tr = table.getElementsByTagName("tr");
         console.log(tr.length);
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
+            td = tr[i].getElementsByTagName("td")[1];
             if (td) {
                 if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
                     tr[i].style.display = "";

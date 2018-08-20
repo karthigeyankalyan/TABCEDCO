@@ -62,6 +62,7 @@
                             $("#loansList").append(tbl);
                             var hr = "<tr>";
                             var th1 = "<th style='text-align:center;vertical-align:middle'>" + "Applicant Name" + "</th>";
+                            var th11 = "<th style='text-align:center;vertical-align:middle'>" + "PSO #" + "</th>";
                             var th2 = "<th style='text-align:center;vertical-align:middle'>" + "Age" + "</th>";
                             var th3 = "<th style='text-align:center;vertical-align:middle'>" + "District" + "</th>";
                             var th4 = "<th style='text-align:center;vertical-align:middle'>" + "Bank" + "</th>";
@@ -71,13 +72,14 @@
                             var th8 = "<th style='text-align:center;vertical-align:middle'>" + "Uploaded by" + "</th>";
                             var th9 = "<th style='text-align:center;vertical-align:middle'>" + "Delete Application" + "</th>";
                             var th10 = "<th style='text-align:center;vertical-align:middle'>" + "Review Application" + "</th>";
-                            $("#loansDetails").append(hr + th1 + th2 + th3 + th4 + th5 + th6 + th7 + th8 + th9);
+                            $("#loansDetails").append(hr + th1 + th2 + th3 + th4 + th5 + th6 + th7 + th8 + th9 + th10 + th11);
                             for (var j = 0; j < jsonFunc.length; j++) {
                                 {
                                     var loan_id = jsonFunc[j]["_id"];
                                     var url = '/ReviewLoanApplication/'+loan_id;
                                     var row = $('<tr></tr>').html('<td>' +
                                         jsonFunc[j]["applicant_name"] + '</td>'+
+                                        '<td>'+jsonFunc[j]["ann_loan_id"]+'</td>'+
                                         '<td>'+jsonFunc[j]["age"]+'</td>'+
                                         '<td>'+jsonFunc[j]["district"] +'</td>'+
                                         '<td>'+jsonFunc[j]["bank"] +'</td>'+
@@ -106,26 +108,7 @@
         tr = table.getElementsByTagName("tr");
         console.log(tr.length);
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-
-    function myFunction() {
-        var input, filter, table, tr, td, i;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("loansList");
-        tr = table.getElementsByTagName("tr");
-        console.log(tr.length);
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
+            td = tr[i].getElementsByTagName("td")[1];
             if (td) {
                 if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
                     tr[i].style.display = "";
