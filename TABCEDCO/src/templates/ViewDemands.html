@@ -121,7 +121,7 @@
                                 var row = $('<tr></tr>').html('<td>' +
                                     +json[j]["demand_number"] +'</td>'+
                                     '<td>'+json[j]["demand_date"]+'</td>'+
-                                    '<td>'+moment(json[j]["cheque_date"]).format('YYYY-MM-DD')+'</td>'+
+                                    '<td>'+moment(json[j]["cheque_date"]['$date']).format('YYYY-MM-DD')+'</td>'+
                                     '<td>'+json[j]["loan_amount"]+'</td>'+
                                     '<td>'+json[j]["belated_interest"]+'</td>'+
                                     '<td>'+json[j]["penal_interest"]+'</td>'+
