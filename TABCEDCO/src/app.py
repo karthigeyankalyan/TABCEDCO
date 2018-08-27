@@ -847,6 +847,8 @@ def update_loan_form(_id):
             app9 = request.form['app9']
             app10 = request.form['app10']
             no_of_beneficiaries = request.form['beneficiaryCount']
+            pso_date = request.form['psoDate']
+            ro_date = request.form['roDate']
             cheque_number = request.form['chequeNumber']
 
             account_head = "Loan To "+loan_category
@@ -878,7 +880,8 @@ def update_loan_form(_id):
                                             roi=roi, no_of_demands=no_of_demands, sub_bank=sub_bank,
                                             amount_to_pay=amount_to_pay, father_name=applicant_father_name,
                                             loan_number=loanNumber, screening_date=screening_date,
-                                            jr_letter_number=jr_letter_number, jr_letter_date=jr_letter_date)
+                                            jr_letter_number=jr_letter_number, jr_letter_date=jr_letter_date,
+                                            ro_date=ro_date, pso_date=pso_date)
 
             return render_template('application_added_update.html', user=user, application_id=_id)
 

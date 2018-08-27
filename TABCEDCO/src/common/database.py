@@ -67,7 +67,7 @@ class Database(object):
                            n6, s6, a6, n7, s7, a7, n8, s8, a8, n9, s9, a9, n10, s10, a10, no_of_beneficiaries,
                            no_of_shgs, app1, app2, app3, app4, app5, app6, app7, app8, app9, app10, cheque_number,
                            no_of_demands, sb, amount_to_pay, father_name, loan_number, jr_letter_date, jr_letter_number,
-                           screening_date):
+                           screening_date, pso_date, ro_date):
         return Database.DATABASE[collection].update_one(query, {'$set': {'applicant_name': applicant_name,
                                                                          'father_name': father_name,
                                                                          'loan_category': loan_category,
@@ -84,6 +84,8 @@ class Database(object):
                                                                          'received_date': received_date,
                                                                          'screening_date': screening_date,
                                                                          'jr_letter_date': jr_letter_date,
+                                                                         'pso_date': pso_date,
+                                                                         'ro_date': ro_date,
                                                                          'jr_letter_number': jr_letter_number,
                                                                          'status': status,
                                                                          'status_date': status_date,
