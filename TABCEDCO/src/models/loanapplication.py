@@ -118,7 +118,7 @@ class LoanApplication(object):
         self.cheque_number = cheque_number
         self.final_collection_amount = final_collection_amount
         self.amount_yet_to_pay = int(loan_amount)
-        self.loan_number = int(loan_number)
+        self.loan_number = loan_number
         self._id = uuid.uuid4().hex if _id is None else _id
 
     def save_to_mongo(self):

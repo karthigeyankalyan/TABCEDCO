@@ -341,6 +341,20 @@
                     }
 
                 if (json[0]['loan_category'] === 'GTL (General Term Loan)' || json[0]['loan_category'] === 'NSS (New-Swarnima Scheme)') {
+
+                    var total_loan_amount = 0;
+                    var total_nbc_share = 0;
+                    var total_tabcedco_share = 0;
+
+                    for (var iter = 0; iter < json.length; iter++) {
+                        total_loan_amount += parseInt(json[iter]['loan_amount']);
+                        json[iter]['nbcfdc_share'] = NBCFDCShareCalculator(json[iter]['loan_category'], json[iter]['loan_amount']);
+                        json[iter]['tabcedco_share'] = tabcedcoShareCalculator(json[iter]['loan_category'], json[iter]['loan_amount']);
+                        json[iter]['beneficiary_share'] = beneficiaryShareCalculator(json[iter]['loan_category'], json[iter]['loan_amount']);
+                        total_nbc_share += parseInt(json[iter]['nbcfdc_share']);
+                        total_tabcedco_share += parseInt(json[iter]['tabcedco_share']);
+                    }
+
                     doc.setFontSize(10);
 
                     var PSO = json[0]['loan_number'] + '/' + cat + '/' +
@@ -377,7 +391,7 @@
 
                     doc.text(37, 120, para1);
 
-                    var paraStr2 = 'Beneficiaries '+ json[0]['applicant_name'] + ' Loan Amount of Rs. '+sanction_amount;
+                    var paraStr2 = 'Beneficiaries '+ json[0]['applicant_name'] + ' Loan Amount of Rs. '+(total_tabcedco_share+total_nbc_share);
 
                     var para2 = doc.splitTextToSize(paraStr2, 160);
 
@@ -434,19 +448,6 @@
                     doc.text(100, 90, '**********');
 
                     doc.text(25, 100, 'PROVISIONAL SANCTION ORDER:');
-
-                    var total_loan_amount = 0;
-                    var total_nbc_share = 0;
-                    var total_tabcedco_share = 0;
-
-                    for (var iter = 0; iter < json.length; iter++) {
-                        total_loan_amount += parseInt(json[iter]['loan_amount']);
-                        json[iter]['nbcfdc_share'] = NBCFDCShareCalculator(json[iter]['loan_category'], json[iter]['loan_amount']);
-                        json[iter]['tabcedco_share'] = tabcedcoShareCalculator(json[iter]['loan_category'], json[iter]['loan_amount']);
-                        json[iter]['beneficiary_share'] = beneficiaryShareCalculator(json[iter]['loan_category'], json[iter]['loan_amount']);
-                        total_nbc_share += parseInt(json[iter]['nbcfdc_share']);
-                        total_tabcedco_share += parseInt(json[iter]['tabcedco_share']);
-                    }
 
                     var pso = doc.splitTextToSize('In pursuance of loan requisition received in reference above, the Managing Director, ' +
                         'TABCEDCO, is pleased to sanction the Term Loan of Rs. ' + (parseInt(total_nbc_share) + parseInt(total_tabcedco_share)) + ' under ' +
