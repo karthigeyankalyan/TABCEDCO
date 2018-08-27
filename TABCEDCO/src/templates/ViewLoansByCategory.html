@@ -7,7 +7,16 @@
             <div id="Category">
                 <label for="loanCategory">Loan Category</label>
                 <select class="form-control" id="loanCategory" name="loanCategory">
-                    {% set categories = ['All', 'GTL', 'NSS', 'MCL', 'MSY'] %}
+                    {% set categories = ['All', 'GTL (General Term Loan)', 'NSS (New-Swarnima Scheme)', 'MCG (Micro-Credit Gents)', 'MSY (Mahila Samriddhi Yojana)'] %}
+                    {% for category in categories %}
+                        <option value= "{{category}}">{{category}}</option>"
+                    {% endfor %}
+                </select>
+            </div>
+            <div id="designation">
+                <label for="uploadedByFilter">Uploaded By Filter</label>
+                <select class="form-control" id="uploadedByFilter" name="uploadedByFilter">
+                    {% set categories = ['All', 'B1 Assistant', 'B2 Assistant', 'B3 Assistant', 'B4 Assistant'] %}
                     {% for category in categories %}
                         <option value= "{{category}}">{{category}}</option>"
                     {% endfor %}
@@ -16,8 +25,8 @@
         </div>
 
         <div id="Search" style="display: flex; flex-direction: column;">
-            <label for="myInput" style="margin-left: 10%">Search by Name:</label>
-            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+            <label for="myInput" style="margin-left: 10%">Search by PSO:</label>
+            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for PSO#.." title="Type in PSO#">
         </div>
     </div>
 
@@ -53,6 +62,28 @@
                                     return account.loan_category === selectedbucket;
                                 });
                                 populatePage(selectedAccountHead);
+                            }
+                        });
+
+                        var $uploadedBy = $("#uploadedByFilter");
+
+                        $uploadedBy.each(function() {
+                            if (this.selectedIndex === 0) {
+                                populatePage(json);
+                            }
+                        });
+
+                        $uploadedBy.change(function () {
+                            var selectedbucket = this.value;
+                            //filter based on  selected year.
+                            if (selectedbucket==="All") {
+                                populatePage(json);
+                            }
+                            else {
+                                selectedDesignation = jQuery.grep(json, function (account) {
+                                    return account.loan_category === selectedbucket;
+                                });
+                                populatePage(selectedDesignation);
                             }
                         });
 
