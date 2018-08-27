@@ -319,9 +319,13 @@
         success: function (json) {
             if(json.length !== 0) {
 
-                if(!json[0]['pso_date']['$date']) {
-                    alert('Update PSO Date!');
-                }
+            try{
+                var test = json[0]['pso_date']['$date'];
+            }
+
+            catch(err) {
+                alert('Update PSO Date and Try Again');
+            }
 
                     if(json[0]['loan_category'] === 'GTL (General Term Loan)') {
                         var cat = "GTL";
