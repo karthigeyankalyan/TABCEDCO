@@ -305,6 +305,7 @@
                 document.getElementById("noOfDemands").value = json[0]["no_of_demands"];
                 document.getElementById("loanReason").value = json[0]["loan_reason"];
                 document.getElementById("loanAmount").value = json[0]["loan_amount"];
+                document.getElementById("loanNumber").value = json[0]["loan_number"];
                 document.getElementById("status").value = json[0]["status"];
                 document.getElementById("jrLetterNumber").value = json[0]["jr_letter_number"];
                 document.getElementById("annualLoanID").value = json[0]["ann_loan_id"];
@@ -312,6 +313,8 @@
                 document.getElementById("statusDate").value = moment(json[0]["status_date"]['$date']).format("YYYY-MM-DD");
                 document.getElementById("jrLetterDate").value = moment(json[0]["jr_letter_date"]['$date']).format("YYYY-MM-DD");
                 document.getElementById("screeningDate").value = moment(json[0]["screening_date"]['$date']).format("YYYY-MM-DD");
+                document.getElementById("roDate").value = moment(json[0]["ro_date"]['$date']).format("YYYY-MM-DD");
+                document.getElementById("psoDate").value = moment(json[0]["pso_date"]['$date']).format("YYYY-MM-DD");
                 for(var i=1; i<10; i++){
                     var shgString = 'shg' + i;
                     document.getElementsByName("n"+i).value = json[0][shgString].name;
