@@ -81,7 +81,7 @@
                             }
                             else {
                                 selectedDesignation = jQuery.grep(json, function (account) {
-                                    return account.loan_category === selectedbucket;
+                                    return account.user_name === selectedbucket;
                                 });
                                 populatePage(selectedDesignation);
                             }
