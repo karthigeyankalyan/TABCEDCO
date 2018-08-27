@@ -177,7 +177,7 @@
                         total_tabcedco_share += parseInt(json[iter]['tabcedco_share']);
                     }
 
-                    var pso = doc.splitTextToSize('In pursuance of loan requisition received in the reference read above, the Managing Director, ' +
+                    var pso = doc.splitTextToSize('In pursuance of loan requisition received in reference above, the Managing Director, ' +
                         'TABCEDCO, is pleased to sanction the Term Loan of Rs. ' + (parseInt(total_nbc_share) + parseInt(total_tabcedco_share)) + ' under ' +
                         json[0]['loan_category'] + ' to the ' + json[0]['sub_bank'] + ' through ' + json[0]['bank'] + ' to disburse this ' +
                         'amount to the beneficiary/beneficiaries as detailed in the Annexure-I', 165);
@@ -227,46 +227,46 @@
                     doc.text(72, 20, 'Annexure II');
                     doc.text(65, 30, 'Terms and Conditions of ' + json[0]['loan_category']);
 
-                    var pt1 = doc.splitTextToSize('1.   The loan amount should be utilised for the purpose for which it has been sanctioned.', 165);
-                    var pt2 = doc.splitTextToSize('2.   The interest will be calculated from the day of disbursement of loan amount by the TABCEDCO.', 165);
+                    var pt1 = doc.splitTextToSize('1.   The loan amount should be utilised for the purpose for which it has been sanctioned.', 170);
+                    var pt2 = doc.splitTextToSize('2.   The interest will be calculated from the day of disbursement of loan amount by the TABCEDCO.', 170);
                     var pt3 = doc.splitTextToSize('3.   The said Bank/ Society should disburse the loan amount to the beneficiary / beneficiaries immediately. ' +
                         'At any cost it should disburse the loan within a period of 30days failing which on the expiry period of 30days, the Bank shall pay Penal ' +
                         'interest of 13.5% per annum to TABCEDCO along with the undisbursed portion of such amount remaining with the Bank. The Bank, after ' +
                         'disbursement of the loan, should ensure, assets creation. Immediately following asset creation, TABCEDCO shall be informed in the ' +
-                        'relevant Form (Form-B) enclosed with the Provisional Sanction Order.', 165);
+                        'relevant Form (Form-B) enclosed with the Provisional Sanction Order.', 170);
                     var pt4 = doc.splitTextToSize('4.   The repayment of loans from the persons to whom the loan was sanctioned shall be for a maximum period ' +
                         'of 5 (Five) / 3 (Three) / 8 (Eight) years including moratorium period of 3 months for the Principal only, as indicated by TABCEDCO. The ' +
                         'repayment schedule shall be on a quarterly basis. The Bank /Society shall take all steps/actions to recover the loan amount advanced to the' +
                         ' beneficiary/beneficiaries. The Bank / Society shall not collect more interest, from the beneficiary/beneficiaries other than the prescribed ' +
-                        'rate of interest by the TABCEDCO for the funds provided by the TABCEDCO.', 165);
-                    var pt5 = doc.splitTextToSize('5.   Irrespective of whether the installments/dues are collected or not by the Bank / Society, the installments/dues ' +
-                        'shall be remitted regularly to TABCEDCO on the due date. In the event of any cheque issued towards the installments/dues is returned for want of ' +
+                        'rate of interest by the TABCEDCO for the funds provided by the TABCEDCO.', 170);
+                    var pt5 = doc.splitTextToSize('5.   Irrespective of whether the installments/dues are collected or not by the Bank / Society, the installments or dues ' +
+                        'shall be remitted regularly to TABCEDCO on the due date. In the event of any cheque issued towards the installments or dues is returned for want of ' +
                         'funds or any other reason, all legal action shall be immediately initiated by the Bank / Society to enforce and recover all the dues payable. All the' +
-                        ' legal/miscellaneous expenses incurred towards the recovery/realization of the dues shall be borne by the Bank / Society.', 165);
+                        ' legal/miscellaneous expenses incurred towards the recovery/realization of the dues shall be borne by the Bank / Society.', 170);
                     var pt6 = doc.splitTextToSize('6.   That the Bank / Society shall pay the Penal interest at the rate of 5% in addition to normal rate ' +
                         'of interest for the defaulted period to TABCEDCO. However, the Bank is at liberty, to collect the Penal interest &quot;in addition ' +
                         'to the normal interest being charged by the Bank” from the beneficiary / beneficiaries in case of default by the beneficiary / beneficiaries ' +
-                        'himself/herself/ themselves to the Bank as per Banking norms.', 165);
+                        'himself/herself/ themselves to the Bank as per Banking norms.', 170);
                     var pt7 = doc.splitTextToSize('7.   That the Society shall be entitled to 3% of the total interest collected depending upon the nature of the scheme ' +
                         'towards service charges for the services rendered by the Bank / Society such as scrutiny, processing of the applications, sanctioning and disbursing ' +
                         'the loan, the recoveries made from the beneficiary / beneficiaries and legal expenses if any incurred, postage and stationery and recovery/collection of' +
                         ' remittance of installment due on the date – irrespective of actual physical recovery being effected or not by which the risk if any, involved in such ' +
                         'recovery shall be the sole liability of the Bank / Society. The TABCEDCO shall part with the 3% (Three parts) out of the interest collected by the Bank / ' +
                         'Society ((ie.) the Sub-Channelising Agency) may collect the interest from the beneficiary at the rate fixed by the TABCEDCO and can remit the interest 3% ' +
-                        'lesser rate along with the Principal. The balance of the percentage of the total interest collected shall be payable to TABCEDCO.', 165);
+                        'lesser rate along with the Principal. The balance of the percentage of the total interest collected shall be payable to TABCEDCO.', 170);
                     var pt8 = doc.splitTextToSize('8.   In the case of scheme where the Banks / Societies participation is also there the first charge on recovery' +
                         ' shall be to TABCEDCO and the balance if any to the lending Banks / Society. The Bank / Society shall abide by the various instructions issued ' +
                         'by TABCEDCO from time to time, during the implementation of the respective scheme/schemes. Based upon the National Corporation rules and regulations ' +
-                        'and the Tamil Nadu Government instructions, the Bank shall also abide by those instructions as and when issued by the TABCEDCO.', 165);
+                        'and the Tamil Nadu Government instructions, the Bank shall also abide by those instructions as and when issued by the TABCEDCO.', 170);
                     var pt9 = doc.splitTextToSize('9.   All assets financed by TABCEDCO shall bear a sign indicating “Financed by Tamil Nadu Backward Classes Economic ' +
-                        'Development Corporation” and the concerned National Corporation and Bank’s name as well.', 165);
+                        'Development Corporation” and the concerned National Corporation and Bank’s name as well.', 170);
                     var pt10 = doc.splitTextToSize('10.   The assets shall be insured by taking comprehensive insurance policy in the joint names of the Bank / Society and ' +
                         'the owners, by the beneficiary / beneficiaries. In the event of any dispute arises in respect of anyone of the terms and conditions mentioned above it' +
                         ' is mutually agreed that the same shall be referred to an Arbitrator for Arbitration and the award passed, shall be binding on all the parties. However, ' +
-                        'in all matters, the Courts at Chennai, shall have jurisdiction.', 165);
+                        'in all matters, the Courts at Chennai, shall have jurisdiction.', 170);
 
                     var concl = doc.splitTextToSize('The authorized person of the ' + json[0]['sub_bank'] + '., shall sign in each page (by affixing the seal of the institution)of ' +
-                        'this Memorandum of Agreement-cum-Provisional Sanction Order as acceptance for the receipt of the loan amount in accordance with the above said terms and conditions.', 165);
+                        'this Memorandum of Agreement-cum-Provisional Sanction Order as acceptance for the receipt of the loan amount in accordance with the above said terms and conditions.', 170);
 
                     doc.text(25, 40, pt1);
                     doc.text(25, 50, pt2);
@@ -281,8 +281,8 @@
 
                     doc.text(25, 30, pt9);
                     doc.text(25, 50, pt10);
-                    doc.text(25, 90, concl);
-                    doc.text(165, 140, 'Managing Director');
+                    doc.text(25, 80, concl);
+                    doc.text(165, 110, 'Managing Director');
 
                     doc.text(25, 150, 'ACCEPTED');
 
