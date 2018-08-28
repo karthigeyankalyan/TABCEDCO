@@ -52,17 +52,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Application_Review.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Application_Review.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/templates/Application_Review.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="390" column="0" lean-forward="true" selection-start-line="390" selection-start-column="0" selection-end-line="390" selection-end-column="0" />
-              <folding>
-                <element signature="e#1523#19284#0" expanded="false" />
-                <element signature="e#37375#45948#0" expanded="false" />
-                <element signature="e#45978#64073#0" expanded="false" />
-                <element signature="e#81845#86887#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="286">
+              <caret line="1560" column="0" lean-forward="true" selection-start-line="1560" selection-start-column="0" selection-end-line="1560" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -92,18 +87,18 @@
       <file leaf-file-name="loanapplication.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/models/loanapplication.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="60" column="0" lean-forward="true" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+            <state relative-caret-position="68">
+              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="database.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="database.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/common/database.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="21" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -169,9 +164,9 @@
         <option value="$PROJECT_DIR$/src/templates/loan_app_form.html" />
         <option value="$PROJECT_DIR$/src/app.py" />
         <option value="$PROJECT_DIR$/src/templates/update_loan_app_form.html" />
-        <option value="$PROJECT_DIR$/src/templates/Application_Review.html" />
         <option value="$PROJECT_DIR$/src/models/loanapplication.py" />
         <option value="$PROJECT_DIR$/src/common/database.py" />
+        <option value="$PROJECT_DIR$/src/templates/Application_Review.html" />
       </list>
     </option>
   </component>
@@ -299,6 +294,7 @@
     <property name="settings.editor.selected.configurable" value="JavaScript.Libraries" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="SearchEverywhereHistoryKey" value="Thiru&#9;null&#9;null" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -564,13 +560,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/templates/profile_loans.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/jszip.js" />
     <entry file="file://$PROJECT_DIR$/src/templates/FileSaver.js" />
     <entry file="file://$PROJECT_DIR$/src/templates/jszip.js" />
@@ -885,51 +874,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/templates/ViewLoansByCategory.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-          <folding>
-            <marker date="1535358282924" expanded="true" signature="4297:4336" ph="..." />
-            <marker date="1535358282924" expanded="true" signature="4420:4459" ph="..." />
-            <marker date="1535358282924" expanded="true" signature="4534:4573" ph="..." />
-            <marker date="1535358282924" expanded="true" signature="4646:4685" ph="..." />
-            <marker date="1535358282924" expanded="true" signature="4763:4802" ph="..." />
-            <marker date="1535358282924" expanded="true" signature="4876:4915" ph="..." />
-            <marker date="1535358282924" expanded="true" signature="4998:5037" ph="..." />
-            <marker date="1535358282924" expanded="true" signature="5118:5157" ph="..." />
-            <marker date="1535358282924" expanded="true" signature="5238:5277" ph="..." />
-            <marker date="1535358282924" expanded="true" signature="5359:5398" ph="..." />
-            <marker date="1535358282924" expanded="true" signature="5487:5526" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/templates/Application_Review.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="390" column="0" lean-forward="true" selection-start-line="390" selection-start-column="0" selection-end-line="390" selection-end-column="0" />
-          <folding>
-            <element signature="e#1523#19284#0" expanded="false" />
-            <element signature="e#37375#45948#0" expanded="false" />
-            <element signature="e#45978#64073#0" expanded="false" />
-            <element signature="e#81845#86887#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/templates/update_loan_app_form.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="217" column="0" lean-forward="false" selection-start-line="217" selection-start-column="0" selection-end-line="217" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/loanapplication.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="60" column="0" lean-forward="true" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -956,8 +904,52 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/common/database.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="21" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/models/loanapplication.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/templates/ViewLoansByCategory.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+          <folding>
+            <marker date="1535358282924" expanded="true" signature="4297:4336" ph="..." />
+            <marker date="1535358282924" expanded="true" signature="4420:4459" ph="..." />
+            <marker date="1535358282924" expanded="true" signature="4534:4573" ph="..." />
+            <marker date="1535358282924" expanded="true" signature="4646:4685" ph="..." />
+            <marker date="1535358282924" expanded="true" signature="4763:4802" ph="..." />
+            <marker date="1535358282924" expanded="true" signature="4876:4915" ph="..." />
+            <marker date="1535358282924" expanded="true" signature="4998:5037" ph="..." />
+            <marker date="1535358282924" expanded="true" signature="5118:5157" ph="..." />
+            <marker date="1535358282924" expanded="true" signature="5238:5277" ph="..." />
+            <marker date="1535358282924" expanded="true" signature="5359:5398" ph="..." />
+            <marker date="1535358282924" expanded="true" signature="5487:5526" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/karthigeyan/Lib/site-packages/parso/python/errors.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="1025" column="6" lean-forward="false" selection-start-line="1025" selection-start-column="6" selection-end-line="1025" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/templates/Application_Review.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="1560" column="0" lean-forward="true" selection-start-line="1560" selection-start-column="0" selection-end-line="1560" selection-end-column="0" />
           <folding />
         </state>
       </provider>
