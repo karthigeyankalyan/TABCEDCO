@@ -1102,11 +1102,11 @@ def update_loan_financial_form(_id):
             LoanApplication.update_pend_amount(amount_yet_to_be_paid=int(update_amount), loan_id=loan_id)
 
             account = Account(invoice_date=cheque_date1.strftime('%Y-%m-%d'), nature_of_transaction="Credit",
-                              amount=loan_amount, loan_id=loan_id,
-                              user_id=user._id, user_name=user.username, depositing_bank=sub_bank,
-                              adjustment_voucher="No", ledger="Sub", interest=belated_interest+interest_collected,
-                              penal_interest=penal_interest, service_charge=service_charge,
-                              principal=principal_collected, cheque_date=cheque_date)
+                              amount=loan_amount, loan_id=loan_id, user_id=user._id, user_name=user.username,
+                              depositing_bank=sub_bank, adjustment_voucher="No", ledger="Sub",
+                              interest=belated_interest+interest_collected, penal_interest=penal_interest,
+                              service_charge=service_charge, principal=principal_collected,
+                              cheque_date=cheque_date)
             account.save_to_mongo()
 
             return render_template('application_added.html', user=user)

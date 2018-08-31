@@ -365,7 +365,7 @@
                     var sanction_amount = (NBCFDCShareCalculator(json[0]['loan_category'], json[0]['loan_amount'])+ tabcedcoShareCalculator(json[0]['loan_category'], json[0]['loan_amount']));
 
                     doc.text(160, 20, 'PSO: '+PSO);
-                    doc.text(25, 30, 'Proc.No.' + json[0]['ann_loan_id'] + '/' + json[0]['district'] + '/'+json[0]['bank']);
+                    doc.text(25, 30, 'Proc.No.' + json[0]['ann_loan_id'] + '/' + json[0]['district'] + '/'+json[0]['sub_bank']);
                     doc.text(160, 30, 'Dated: ' + moment(json[0]['pso_date']['$date']).format('DD-MM-YYYY'));
 
                     doc.text(25, 40, 'To');
