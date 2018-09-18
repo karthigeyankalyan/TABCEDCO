@@ -74,8 +74,10 @@
         <label for="bankName">District Bank</label>
         <input type="text" id="bankName" name="bankName" style="display: block; width: 100%">
 
-        <label for="subBank">Sub Bank</label>
-        <input type="text" id="subBank" name="subBank" style="display: block; width: 100%">
+        <div id="sb">
+            <label for="subBank">Sub Bank</label>
+            <input type="text" id="subBank" name="subBank" style="display: block; width: 100%">
+        </div>
     </div>
 
     <div class="form-group" style="display: block; width: 38%">
@@ -212,7 +214,7 @@
             document.getElementById("nameOfApplicantFather").style.display = "none";
             document.getElementById("psod").style.display = "none";
             document.getElementById("pson").style.display = "none";
-            document.getElementById("subBank").style.display = "none";
+            document.getElementById("sb").style.display = "none";
             document.getElementById("BenCount").style.display = "";
             document.getElementById("shgCount").style.display = "";
         }
@@ -233,6 +235,7 @@
         shg_det.empty();
             var shg_name = "sn"+i;
             var inputSNO = "sno"+i;
+            var sb = "sb"+i;
             var amount_pm = "apm"+i;
             var strength = "strength"+i;
             var total_amount = "ta"+i;
@@ -241,6 +244,10 @@
                 '<div style="display: flex; flex-direction: column;">' +
                 '<label for='+inputSNO+'>S.No</label>' +
                 '<input class="amount" type="number" id='+inputSNO+' name='+inputSNO+' value='+(i+1)+'>' +
+                '</div>' +
+                '<div style="display: flex; flex-direction: column;">' +
+                '<label for='+sb+'>Branch</label>' +
+                '<input type="text" id='+sb+' name='+sb+'>' +
                 '</div>' +
                 '<div style="display: flex; flex-direction: column;">' +
                 '<label for='+shg_name+'>SHG Name</label>' +
@@ -314,7 +321,7 @@
         document.getElementById(total_tag_id).value = total_shg_amount;
         total_loan_amount += total_shg_amount;
         total_ben_count += parseInt(strength);
-        document.getElementById("invIDCTR").value = (i-1);
+        document.getElementById("invIDCTR").value = (i);
     }
 
     function populateTotals() {

@@ -564,13 +564,16 @@ def loan_form(user_id):
                 ro_number = request.form['roNumber']
 
                 for i in range(int(inv_id)):
+                    print(inv_id)
                     shg_name_string = "sn" + str(i)
                     amount_per_member_string = "apm" + str(i)
                     strength_string = "strength" + str(i)
                     ta = "ta" + str(i)
+                    sb = "sb" + str(i)
                     shg_name = request.form[shg_name_string]
                     amount_per_member = request.form[amount_per_member_string]
                     strength = request.form[strength_string]
+                    sub_bank = request.form[sb]
 
                     application = LoanApplication(applicant_name=applicant_name, loan_category=loan_category, age=age,
                                                   gender=gender, address=address, district=district,
@@ -588,9 +591,7 @@ def loan_form(user_id):
 
                     application.save_to_mongo()
 
-                    print(application.ro_date)
-
-                return render_template('application_added.html', application=application, user=user)
+                return render_template('application_addedv2.html', user=user)
 
     else:
         return render_template('login_fail.html')

@@ -1080,6 +1080,9 @@
 
                 var aggregatedData = d3.nest()
                     .key(function (d) {
+                        return d.bank+"-"+d.sub_bank;
+                    })
+                    .key(function (d) {
                         return d.shg_name;
                     })
                     .rollup(
