@@ -4,21 +4,21 @@ import pymongo
 
 
 class Database(object):
-    URI = os.environ['MONGODB_URI']
-    DATABASE = None
-
-    @staticmethod
-    def initialize():
-        client = pymongo.MongoClient(Database.URI)
-        Database.DATABASE = client['heroku_xwlzxcmr']
-
-    # URI = "mongodb://127.0.0.1:27017"
+    # URI = os.environ['MONGODB_URI']
     # DATABASE = None
     #
     # @staticmethod
     # def initialize():
     #     client = pymongo.MongoClient(Database.URI)
-    #     Database.DATABASE = client['TABCEDCO']
+    #     Database.DATABASE = client['heroku_xwlzxcmr']
+
+    URI = "mongodb://127.0.0.1:27017"
+    DATABASE = None
+
+    @staticmethod
+    def initialize():
+        client = pymongo.MongoClient(Database.URI)
+        Database.DATABASE = client['TABCEDCO']
 
     @staticmethod
     def insert(collection, data):
@@ -66,6 +66,10 @@ class Database(object):
                            ann_loan_id, user_id, user_name, shg_name, amount_per_member, strength, no_of_shgs,
                            cheque_number, no_of_demands, sb, amount_to_pay, father_name, loan_number, jr_letter_date,
                            jr_letter_number, screening_date, pso_date, ro_date, ro_number):
+
+        amount_per_member = 0 if amount_per_member is None else amount_per_member
+        strength = 0 if strength is None else strength
+
         return Database.DATABASE[collection].update_one(query, {'$set': {'applicant_name': applicant_name,
                                                                          'father_name': father_name,
                                                                          'loan_category': loan_category,
