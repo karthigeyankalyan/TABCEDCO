@@ -212,6 +212,7 @@
             document.getElementById("nameOfApplicantFather").style.display = "none";
             document.getElementById("psod").style.display = "none";
             document.getElementById("pson").style.display = "none";
+            document.getElementById("subBank").style.display = "none";
             document.getElementById("BenCount").style.display = "";
             document.getElementById("shgCount").style.display = "";
         }
@@ -266,6 +267,7 @@
 
         var shg_name = "sn"+i;
         var inputSNO = "sno"+i;
+        var sb = "sb"+i;
         var amount_pm = "apm"+i;
         var strength = "strength"+i;
         var total_amount = "ta"+i;
@@ -273,6 +275,10 @@
             .html(
                 '<div style="display: flex; flex-direction: column;">' +
                 '<input type="number" id='+inputSNO+' name='+inputSNO+' value='+(i+1)+'>' +
+                '</div>' +
+                '<div style="display: flex; flex-direction: column;">' +
+                '<input type="text" id='+sb+' name='+sb+'>' +
+                '</div>' +
                 '</div>' +
                 '<div style="display: flex; flex-direction: column;">' +
                 '<input type="text" id='+shg_name+' name='+shg_name+'>' +

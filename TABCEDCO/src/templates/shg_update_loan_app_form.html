@@ -251,12 +251,16 @@
     function addAnotherField() {
         var shg_name = "sn"+j;
         var amount_pm = "apm"+j;
+        var sb = "sb"+i;
         var strength = "strength"+j;
         var total_amount = "ta"+j;
         var row = $('<div style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;"></div>')
             .html(
                 '<div style="display: flex; flex-direction: column;">' +
                 '<input type="text" id='+shg_name+' name='+shg_name+'>' +
+                '</div>' +
+                '<div style="display: flex; flex-direction: column;">' +
+                '<input type="text" id='+sb+' name='+sb+'>' +
                 '</div>' +
                 '<div style="display: flex; flex-direction: column;">' +
                 '<input type="text" id='+strength+' name='+strength+'>' +

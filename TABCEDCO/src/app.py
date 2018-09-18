@@ -754,7 +754,6 @@ def update_loan_form(_id):
                 loan_category = request.form['loanCategory']
                 district = request.form['district']
                 bank = request.form['bankName']
-                sub_bank = request.form['subBank']
                 loan_reason = request.form['loanReason']
                 loanNumber = request.form['loanNumber']
                 loan_amount = request.form['loanAmount']
@@ -780,26 +779,24 @@ def update_loan_form(_id):
                     amount_per_member_string = "apm" + str(i)
                     strength_string = "strength" + str(i)
                     ta = "ta" + str(i)
+                    sb = "sb" + str(i)
                     shg_name = request.form[shg_name_string]
                     amount_per_member = request.form[amount_per_member_string]
                     strength = request.form[strength_string]
+                    sub_bank = request.form[sb]
 
-                    LoanApplication.update_loan_app(applicant_name=applicant_name, loan_category=loan_category, age=age,
-                                                    gender=gender, address=address, district=district,
-                                                    annual_income=annual_income, caste=caste, bank=bank, loan_reason=loan_reason,
+                    LoanApplication.update_loan_app(applicant_name=None, loan_category=loan_category, age=None,
+                                                    gender=None, address=None, district=district,
+                                                    annual_income=None, caste=None, bank=bank, loan_reason=loan_reason,
                                                     loan_amount=loan_amount, received_date=received_date, status=status,
                                                     status_date=status_date, ann_loan_id=ann_loan_id, user_id=user_id, user_name=user_name,
                                                     no_of_shgs=no_of_shgs, loan_id=_id, cheque_number=cheque_number,
                                                     roi=roi, no_of_demands=no_of_demands, sub_bank=sub_bank,
-                                                    amount_to_pay=amount_to_pay, father_name=applicant_father_name,
+                                                    amount_to_pay=amount_to_pay, father_name=None,
                                                     loan_number=loanNumber, screening_date=screening_date,
                                                     jr_letter_number=jr_letter_number, jr_letter_date=jr_letter_date,
                                                     ro_date=ro_date, pso_date=None, amount_per_member=amount_per_member,
                                                     strength=strength, shg_name=shg_name, ro_number=ro_number)
-
-                    application.save_to_mongo()
-
-                    print(application.ro_date)
 
                 return render_template('application_added_update.html', application=application, user=user)
 
