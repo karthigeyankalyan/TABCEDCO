@@ -44,6 +44,7 @@
             success: function (json) {
                     {
                         var $accountHead = $("#loanCategory");
+                        console.log(json);
 
                         $accountHead.each(function() {
                             if (this.selectedIndex === 0) {
@@ -92,7 +93,7 @@
                             var tbl = $("<table class='table table-bordered table-dark' id='loansDetails'/>");
                             $("#loansList").append(tbl);
                             var hr = "<tr>";
-                            var th1 = "<th style='text-align:center;vertical-align:middle'>" + "Applicant Name" + "</th>";
+                            var th1 = "<th style='text-align:center;vertical-align:middle'>" + "Applicant/SHG Name" + "</th>";
                             var th2 = "<th style='text-align:center;vertical-align:middle'>" + "PSO #" + "</th>";
                             var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Age" + "</th>";
                             var th4 = "<th style='text-align:center;vertical-align:middle'>" + "District" + "</th>";
@@ -109,8 +110,13 @@
                                     var deletion = '/delete_application/'+jsonFunc[j]["_id"];
                                     var loan_id = jsonFunc[j]["_id"];
                                     var url = '/ReviewLoanApplication/'+loan_id;
-                                    var row = $('<tr></tr>').html('<td>' +
-                                        jsonFunc[j]["applicant_name"] + '</td>'+
+                                    if (jsonFunc[j]['loan_category'] === 'GTL (General Term Loan)' || jsonFunc[j]['loan_category'] === 'NSS (New-Swarnima Scheme)') {
+                                        var name = jsonFunc[j]["applicant_name"];
+                                    }
+                                    else {
+                                        name = jsonFunc[j]["shg_name"];
+                                    }
+                                    var row = $('<tr></tr>').html('<td>' + name + '</td>'+
                                         '<td>'+jsonFunc[j]["ann_loan_id"]+'</td>'+
                                         '<td>'+jsonFunc[j]["age"]+'</td>'+
                                         '<td>'+jsonFunc[j]["district"] +'</td>'+

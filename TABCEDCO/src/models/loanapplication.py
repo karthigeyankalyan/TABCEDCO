@@ -7,14 +7,10 @@ from src.common.database import Database
 class LoanApplication(object):
     def __init__(self, loan_category, district, caste, bank, roi, loan_reason, received_date, status, status_date,
                  no_of_demands, ann_loan_id, loan_amount, user_id, user_name, annual_income=None, age=None, gender=None,
-                 address=None, applicant_name=None, n1=None, s1=None, a1=None, n2=None, s2=None, a2=None, n3=None,
-                 s3=None, a3=None, n4=None, s4=None, a4=None, n5=None, s5=None, a5=None, n6=None, s6=None, a6=None,
-                 n7=None, s7=None, a7=None, n8=None, s8=None, a8=None, n9=None, s9=None, a9=None, n10=None, s10=None,
-                 a10=None, no_of_beneficiaries=None, _id=None, no_of_shgs=None, app1=None, app2=None, app3=None,
-                 app4=None, app5=None, app6=None, app7=None, app8=None, app9=None, app10=None, cheque_number=None,
-                 sub_bank=None, final_collection_amount=None, amount_yet_to_pay=None, father_name=None,
-                 screening_date=None, loan_number=None, jr_letter_date=None, jr_letter_number=None, pso_date=None,
-                 ro_date=None):
+                 address=None, applicant_name=None, shg_name=None, strength=None, amount_per_member=None,
+                 cheque_number=None, sub_bank=None, final_collection_amount=None, _id=None, ro_number=None,
+                 amount_yet_to_pay=None, no_of_shgs=None, father_name=None, screening_date=None, loan_number=None,
+                 jr_letter_date=None, jr_letter_number=None, pso_date=None, ro_date=None):
         self.applicant_name = applicant_name
         self.father_name = father_name
         self.loan_category = loan_category
@@ -28,6 +24,7 @@ class LoanApplication(object):
         self.sub_bank = sub_bank
         self.loan_reason = loan_reason
         self.jr_letter_number = jr_letter_number
+        self.ro_number = ro_number
 
         if jr_letter_date:
             self.jr_letter_date = (datetime.combine(datetime.strptime(jr_letter_date, '%Y-%m-%d').date(),
@@ -74,47 +71,11 @@ class LoanApplication(object):
         self.user_id = user_id
         self.user_name = user_name
         self.no_of_shgs = no_of_shgs
-        self.n1 = n1
-        self.s1 = s1
-        self.a1 = a1
-        self.n2 = n2
-        self.s2 = s2
-        self.a2 = a2
-        self.n3 = n3
-        self.s3 = s3
-        self.a3 = a3
-        self.n4 = n4
-        self.s4 = s4
-        self.a4 = a4
-        self.n5 = n5
-        self.s5 = s5
-        self.a5 = a5
-        self.n6 = n6
-        self.s6 = s6
-        self.a6 = a6
-        self.n7 = n7
-        self.s7 = s7
-        self.a7 = a7
-        self.n8 = n8
-        self.s8 = s8
-        self.a8 = a8
-        self.n9 = n9
-        self.s9 = s9
-        self.a9 = a9
-        self.n10 = n10
-        self.s10 = s10
-        self.a10 = a10
-        self.app1 = app1
-        self.app2 = app2
-        self.app3 = app3
-        self.app4 = app4
-        self.app5 = app5
-        self.app6 = app6
-        self.app7 = app7
-        self.app8 = app8
-        self.app9 = app9
-        self.app10 = app10
-        self.no_of_beneficiaries = no_of_beneficiaries
+        self.shg_name = shg_name
+        self.amount_per_member = int(amount_per_member)
+        self.strength = int(strength)
+        print(amount_per_member, strength)
+        self.total_amount = int(amount_per_member)*int(strength)
         self.cheque_number = cheque_number
         self.final_collection_amount = final_collection_amount
         self.amount_yet_to_pay = int(loan_amount)
@@ -127,11 +88,9 @@ class LoanApplication(object):
     @classmethod
     def update_loan_app(cls, applicant_name, loan_category, age, gender, address, district, annual_income, sub_bank,
                         caste, bank, loan_reason, loan_amount, received_date, status, status_date, roi, no_of_demands,
-                        ann_loan_id, user_id, user_name, loan_id, n1, s1, a1, n2, s2, a2, n3, s3, a3, n4, s4, a4,
-                        n5, s5, a5, n6, s6, a6, n7, s7, a7, n8, s8, a8, n9, s9, a9, n10, s10, a10, no_of_beneficiaries,
-                        no_of_shgs, app1, app2, app3, app4, app5, app6, app7, app8, app9, app10, cheque_number,
-                        amount_to_pay, father_name, loan_number, jr_letter_date, jr_letter_number, screening_date,
-                        ro_date, pso_date):
+                        ann_loan_id, user_id, user_name, loan_id, no_of_shgs, amount_per_member, strength, shg_name,
+                        cheque_number, amount_to_pay, father_name, loan_number, jr_letter_date, jr_letter_number,
+                        screening_date, ro_date, pso_date, ro_number):
 
         if pso_date:
             pso_date = (datetime.combine(datetime.strptime(pso_date, '%Y-%m-%d').date(),
@@ -174,15 +133,12 @@ class LoanApplication(object):
                                     district=district, annual_income=annual_income, caste=caste, bank=bank, sb=sub_bank,
                                     no_of_demands=no_of_demands, loan_reason=loan_reason, loan_amount=loan_amount,
                                     received_date=received_date, status=status, status_date=status_date,
-                                    ann_loan_id=ann_loan_id, user_id=user_id, user_name=user_name, n1=n1, s1=s1, a1=a1,
-                                    n2=n2, s2=s2, a2=a2, n3=n3, s3=s3, a3=a3, n4=n4, s4=s4, a4=a4, n5=n5, s5=s5, a5=a5,
-                                    n6=n6, s6=s6, a6=a6, n7=n7, s7=s7, a7=a7, n8=n8, s8=s8, a8=a8, n9=n9, s9=s9, a9=a9,
-                                    n10=n10, s10=s10, a10=a10, no_of_beneficiaries=no_of_beneficiaries,
-                                    no_of_shgs=no_of_shgs, app1=app1, app2=app2, app3=app3, app4=app4, app5=app5,
-                                    app6=app6, app7=app7, app8=app8, app9=app9, app10=app10,
+                                    ann_loan_id=ann_loan_id, user_id=user_id, user_name=user_name, shg_name=shg_name,
+                                    amount_per_member=amount_per_member, strength=strength, no_of_shgs=no_of_shgs,
                                     cheque_number=cheque_number, amount_to_pay=amount_to_pay, father_name=father_name,
-                                    loan_number=loan_number, jr_letter_date=jr_letter_date, jr_letter_number=jr_letter_number,
-                                    screening_date=screening_date, ro_date=ro_date, pso_date=pso_date)
+                                    loan_number=loan_number, jr_letter_date=jr_letter_date,
+                                    jr_letter_number=jr_letter_number, screening_date=screening_date, ro_date=ro_date,
+                                    pso_date=pso_date, ro_number=ro_number)
 
     @classmethod
     def update_pend_amount(cls, amount_yet_to_be_paid, loan_id):
@@ -223,18 +179,14 @@ class LoanApplication(object):
             'user_name': self.user_name,
             'user_id': self.user_id,
             'no_of_shgs': self.no_of_shgs,
-            'shg1': {'name': self.n1, 'strength': self.s1, 'amount': self.a1, 'applicants': self.app1},
-            'shg2': {'name': self.n2, 'strength': self.s2, 'amount': self.a2, 'applicants': self.app2},
-            'shg3': {'name': self.n3, 'strength': self.s3, 'amount': self.a3, 'applicants': self.app3},
-            'shg4': {'name': self.n4, 'strength': self.s4, 'amount': self.a4, 'applicants': self.app4},
-            'shg5': {'name': self.n5, 'strength': self.s5, 'amount': self.a5, 'applicants': self.app5},
-            'shg6': {'name': self.n6, 'strength': self.s6, 'amount': self.a6, 'applicants': self.app6},
-            'shg7': {'name': self.n7, 'strength': self.s7, 'amount': self.a7, 'applicants': self.app7},
-            'shg8': {'name': self.n8, 'strength': self.s8, 'amount': self.a8, 'applicants': self.app8},
-            'shg9': {'name': self.n9, 'strength': self.s9, 'amount': self.a9, 'applicants': self.app9},
-            'shg10': {'name': self.n10, 'strength': self.s10, 'amount': self.a10, 'applicants': self.app10},
-            'no_of_beneficiaries': self.no_of_beneficiaries,
+            'strength': self.strength,
+            'amount_per_member': self.amount_per_member,
+            'shg_name': self.shg_name,
+            'total_amount': self.total_amount,
             'cheque_number': self.cheque_number,
+            'ro_date': self.ro_date,
+            'ro_number': self.ro_number,
+            'pso_date': self.pso_date,
             '_id': self._id,
         }
 

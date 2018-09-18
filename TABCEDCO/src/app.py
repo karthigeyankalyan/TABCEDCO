@@ -480,126 +480,117 @@ def loan_form(user_id):
             return render_template('loan_app_form.html', user=user)
 
         else:
-            user = User.get_by_id(user_id)
-            applicant_name = request.form['applicantName']
-            applicant_father_name = request.form['applicantFatherName']
-            loan_category = request.form['loanCategory']
-            age = request.form['age']
-            gender = request.form['gender']
-            address = request.form['address']
-            district = request.form['district']
-            annual_income = request.form['annualIncome']
-            caste = request.form['caste']
-            bank = request.form['bankName']
-            sub_bank = request.form['subBank']
-            loan_reason = request.form['loanReason']
-            loan_amount = request.form['loanAmount']
-            loanNumber = request.form['loanNumber']
-            received_date = request.form['receivedDate']
-            screening_date = request.form['screeningDate']
-            roi = request.form['interest']
-            no_of_demands = request.form['noOfDemands']
-            status = request.form['status']
-            status_date = request.form['statusDate']
-            jr_letter_date = request.form['jrLetterDate']
-            jr_letter_number = request.form['jrLetterNumber']
-            ann_loan_id = request.form['annualLoanID']
-            no_of_shgs = request.form['shgCount']
-            user_id = user_id
-            user_name = user.username
-            n1 = request.form['n1']
-            s1 = request.form['s1']
+            category = request.form['loanCategory']
+            if category == "GTL (General Term Loan)" or category == "NSS (New-Swarnima Scheme)":
+                user = User.get_by_id(user_id)
+                applicant_name = request.form['applicantName']
+                applicant_father_name = request.form['applicantFatherName']
+                loan_category = request.form['loanCategory']
+                age = request.form['age']
+                gender = request.form['gender']
+                address = request.form['address']
+                district = request.form['district']
+                annual_income = request.form['annualIncome']
+                caste = request.form['caste']
+                bank = request.form['bankName']
+                sub_bank = request.form['subBank']
+                loan_reason = request.form['loanReason']
+                loan_amount = request.form['loanAmount']
+                loanNumber = request.form['loanNumber']
+                received_date = request.form['receivedDate']
+                screening_date = request.form['screeningDate']
+                roi = request.form['interest']
+                no_of_demands = request.form['noOfDemands']
+                status = request.form['status']
+                status_date = request.form['statusDate']
+                jr_letter_date = request.form['jrLetterDate']
+                jr_letter_number = request.form['jrLetterNumber']
+                ann_loan_id = request.form['annualLoanID']
+                no_of_shgs = request.form['shgCount']
+                user_id = user_id
+                user_name = user.username
+                cheque_number = request.form['chequeNumber']
+                pso_date = request.form['psoDate']
+                ro_date = request.form['roDate']
 
-            if request.form['a1']:
-                a1 = int(request.form['a1'])*int(request.form['s1'])
-            else:
-                a1 = None
-            n2 = request.form['n2']
-            s2 = request.form['s2']
-            if request.form['a2']:
-                a2 = int(request.form['a2'])*int(request.form['s2'])
-            else:
-                a2 = None
-            n3 = request.form['n3']
-            s3 = request.form['s3']
-            if request.form['a3']:
-                a3 = int(request.form['a3'])*int(request.form['s3'])
-            else:
-                a3 = None
-            n4 = request.form['n4']
-            s4 = request.form['s4']
-            if request.form['a4']:
-                a4 = int(request.form['a4'])*int(request.form['s4'])
-            else:
-                a4 = None
-            n5 = request.form['n5']
-            s5 = request.form['s5']
-            if request.form['a5']:
-                a5 = int(request.form['a5'])*int(request.form['s5'])
-            else:
-                a5 = None
-            n6 = request.form['n6']
-            s6 = request.form['s6']
-            if request.form['a6']:
-                a6 = int(request.form['a6'])*int(request.form['s6'])
-            else:
-                a6 = None
-            n7 = request.form['n7']
-            s7 = request.form['s7']
-            if request.form['a7']:
-                a7 = int(request.form['a7'])*int(request.form['s7'])
-            else:
-                a7 = None
-            n8 = request.form['n8']
-            s8 = request.form['s8']
-            if request.form['a8']:
-                a8 = int(request.form['a8'])*int(request.form['s8'])
-            else:
-                a8 = None
-            n9 = request.form['n9']
-            s9 = request.form['s9']
-            if request.form['a9']:
-                a9 = int(request.form['a9'])*int(request.form['s9'])
-            else:
-                a9 = None
-            n10 = request.form['n10']
-            s10 = request.form['s10']
-            if request.form['a10']:
-                a10 = int(request.form['a10'])*int(request.form['s10'])
-            else:
-                a10 = None
-            app1 = request.form['app1']
-            app2 = request.form['app2']
-            app3 = request.form['app3']
-            app4 = request.form['app4']
-            app5 = request.form['app5']
-            app6 = request.form['app6']
-            app7 = request.form['app7']
-            app8 = request.form['app8']
-            app9 = request.form['app9']
-            app10 = request.form['app10']
-            no_of_beneficiaries = request.form['beneficiaryCount']
-            cheque_number = request.form['chequeNumber']
+                application = LoanApplication(applicant_name=applicant_name, loan_category=loan_category, age=age,
+                                              gender=gender, address=address, district=district,
+                                              annual_income=annual_income, caste=caste, bank=bank,
+                                              loan_reason=loan_reason, loan_amount=loan_amount,
+                                              received_date=received_date, status=status,
+                                              status_date=status_date, ann_loan_id=ann_loan_id, user_id=user_id,
+                                              user_name=user_name, no_of_shgs=no_of_shgs, cheque_number=cheque_number,
+                                              sub_bank=sub_bank, roi=roi, no_of_demands=no_of_demands,
+                                              father_name=applicant_father_name, screening_date=screening_date,
+                                              loan_number=loanNumber, jr_letter_date=jr_letter_date,
+                                              jr_letter_number=jr_letter_number, pso_date=pso_date,
+                                              ro_date=ro_date)
 
-            application = LoanApplication(applicant_name=applicant_name, loan_category=loan_category, age=age,
-                                          gender=gender, address=address, district=district,
-                                          annual_income=annual_income, caste=caste, bank=bank, loan_reason=loan_reason,
-                                          loan_amount=loan_amount, received_date=received_date, status=status,
-                                          status_date=status_date, ann_loan_id=ann_loan_id, user_id=user_id,
-                                          user_name=user_name, n1=n1, s1=s1, a1=a1, n2=n2, s2=s2, a2=a2, n3=n3, s3=s3,
-                                          a3=a3, n4=n4, s4=s4, a4=a4, n5=n5, s5=s5, a5=a5, n6=n6, s6=s6, a6=a6, n7=n7,
-                                          s7=s7, a7=a7, n8=n8, s8=s8, a8=a8, n9=n9, s9=s9, a9=a9, n10=n10, s10=s10,
-                                          a10=a10, no_of_beneficiaries=no_of_beneficiaries, no_of_shgs=no_of_shgs,
-                                          app1=app1, app2=app2, app3=app3, app4=app4, app5=app5, app6=app6, app7=app7,
-                                          app8=app8, app9=app9, app10=app10, cheque_number=cheque_number,
-                                          sub_bank=sub_bank, roi=roi, no_of_demands=no_of_demands,
-                                          father_name=applicant_father_name, screening_date=screening_date,
-                                          loan_number=loanNumber, jr_letter_date=jr_letter_date,
-                                          jr_letter_number=jr_letter_number)
+                application.save_to_mongo()
 
-            application.save_to_mongo()
+                return render_template('application_added.html', application=application, user=user)
 
-            return render_template('application_added.html', application=application, user=user)
+            else:
+                user = User.get_by_id(user_id)
+                applicant_name = request.form['applicantName']
+                applicant_father_name = request.form['applicantFatherName']
+                loan_category = request.form['loanCategory']
+                age = request.form['age']
+                gender = request.form['gender']
+                address = request.form['address']
+                district = request.form['district']
+                annual_income = request.form['annualIncome']
+                caste = request.form['caste']
+                bank = request.form['bankName']
+                sub_bank = request.form['subBank']
+                loan_reason = request.form['loanReason']
+                loanNumber = request.form['loanNumber']
+                total_loan_amount = request.form['loanAmount']
+                received_date = request.form['receivedDate']
+                screening_date = request.form['screeningDate']
+                roi = request.form['interest']
+                no_of_demands = request.form['noOfDemands']
+                status = request.form['status']
+                status_date = request.form['statusDate']
+                jr_letter_date = request.form['jrLetterDate']
+                jr_letter_number = request.form['jrLetterNumber']
+                ann_loan_id = request.form['annualLoanID']
+                no_of_shgs = int(request.form['shgCount'])
+                inv_id = int(request.form['invIDCTR'])
+                user_id = user_id
+                user_name = user.username
+                cheque_number = request.form['chequeNumber']
+                ro_date = request.form['roDate']
+                ro_number = request.form['roNumber']
+
+                for i in range(int(inv_id)):
+                    shg_name_string = "sn" + str(i)
+                    amount_per_member_string = "apm" + str(i)
+                    strength_string = "strength" + str(i)
+                    ta = "ta" + str(i)
+                    shg_name = request.form[shg_name_string]
+                    amount_per_member = request.form[amount_per_member_string]
+                    strength = request.form[strength_string]
+
+                    application = LoanApplication(applicant_name=applicant_name, loan_category=loan_category, age=age,
+                                                  gender=gender, address=address, district=district,
+                                                  annual_income=annual_income, caste=caste, bank=bank,
+                                                  loan_reason=loan_reason, loan_amount=total_loan_amount,
+                                                  received_date=received_date, status=status,
+                                                  status_date=status_date, ann_loan_id=ann_loan_id, user_id=user_id,
+                                                  user_name=user_name, no_of_shgs=no_of_shgs,
+                                                  cheque_number=cheque_number, sub_bank=sub_bank, roi=roi,
+                                                  no_of_demands=no_of_demands, father_name=applicant_father_name,
+                                                  screening_date=screening_date, loan_number=loanNumber,
+                                                  jr_letter_date=jr_letter_date, jr_letter_number=jr_letter_number,
+                                                  shg_name=shg_name, amount_per_member=amount_per_member,
+                                                  strength=strength, ro_date=ro_date, ro_number=ro_number)
+
+                    application.save_to_mongo()
+
+                    print(application.ro_date)
+
+                return render_template('application_added.html', application=application, user=user)
 
     else:
         return render_template('login_fail.html')
@@ -641,77 +632,6 @@ def add_another_loan_form(_id):
             no_of_shgs = request.form['shgCount']
             user_id = user._id
             user_name = user.username
-            n1 = request.form['n1']
-            s1 = request.form['s1']
-
-            if request.form['a1']:
-                a1 = int(request.form['a1'])*int(request.form['s1'])
-            else:
-                a1 = None
-            n2 = request.form['n2']
-            s2 = request.form['s2']
-            if request.form['a2']:
-                a2 = int(request.form['a2'])*int(request.form['s2'])
-            else:
-                a2 = None
-            n3 = request.form['n3']
-            s3 = request.form['s3']
-            if request.form['a3']:
-                a3 = int(request.form['a3'])*int(request.form['s3'])
-            else:
-                a3 = None
-            n4 = request.form['n4']
-            s4 = request.form['s4']
-            if request.form['a4']:
-                a4 = int(request.form['a4'])*int(request.form['s4'])
-            else:
-                a4 = None
-            n5 = request.form['n5']
-            s5 = request.form['s5']
-            if request.form['a5']:
-                a5 = int(request.form['a5'])*int(request.form['s5'])
-            else:
-                a5 = None
-            n6 = request.form['n6']
-            s6 = request.form['s6']
-            if request.form['a6']:
-                a6 = int(request.form['a6'])*int(request.form['s6'])
-            else:
-                a6 = None
-            n7 = request.form['n7']
-            s7 = request.form['s7']
-            if request.form['a7']:
-                a7 = int(request.form['a7'])*int(request.form['s7'])
-            else:
-                a7 = None
-            n8 = request.form['n8']
-            s8 = request.form['s8']
-            if request.form['a8']:
-                a8 = int(request.form['a8'])*int(request.form['s8'])
-            else:
-                a8 = None
-            n9 = request.form['n9']
-            s9 = request.form['s9']
-            if request.form['a9']:
-                a9 = int(request.form['a9'])*int(request.form['s9'])
-            else:
-                a9 = None
-            n10 = request.form['n10']
-            s10 = request.form['s10']
-            if request.form['a10']:
-                a10 = int(request.form['a10'])*int(request.form['s10'])
-            else:
-                a10 = None
-            app1 = request.form['app1']
-            app2 = request.form['app2']
-            app3 = request.form['app3']
-            app4 = request.form['app4']
-            app5 = request.form['app5']
-            app6 = request.form['app6']
-            app7 = request.form['app7']
-            app8 = request.form['app8']
-            app9 = request.form['app9']
-            app10 = request.form['app10']
             no_of_beneficiaries = request.form['beneficiaryCount']
             cheque_number = request.form['chequeNumber']
 
@@ -720,12 +640,7 @@ def add_another_loan_form(_id):
                                           annual_income=annual_income, caste=caste, bank=bank, loan_reason=loan_reason,
                                           loan_amount=loan_amount, received_date=received_date, status=status,
                                           status_date=status_date, ann_loan_id=ann_loan_id, user_id=user_id,
-                                          user_name=user_name, n1=n1, s1=s1, a1=a1, n2=n2, s2=s2, a2=a2, n3=n3, s3=s3,
-                                          a3=a3, n4=n4, s4=s4, a4=a4, n5=n5, s5=s5, a5=a5, n6=n6, s6=s6, a6=a6, n7=n7,
-                                          s7=s7, a7=a7, n8=n8, s8=s8, a8=a8, n9=n9, s9=s9, a9=a9, n10=n10, s10=s10,
-                                          a10=a10, no_of_beneficiaries=no_of_beneficiaries, no_of_shgs=no_of_shgs,
-                                          app1=app1, app2=app2, app3=app3, app4=app4, app5=app5, app6=app6, app7=app7,
-                                          app8=app8, app9=app9, app10=app10, cheque_number=cheque_number,
+                                          user_name=user_name, cheque_number=cheque_number,
                                           sub_bank=sub_bank, roi=roi, no_of_demands=no_of_demands,
                                           father_name=applicant_father_name, screening_date=screening_date,
                                           loan_number=loanNumber, jr_letter_date=jr_letter_date,
@@ -744,146 +659,149 @@ def update_loan_form(_id):
     email = session['email']
     if email is not None:
         if request.method == 'GET':
-            user = User.get_by_email(email)
-            return render_template('update_loan_app_form.html', user=user, application_id=_id)
-
-        else:
-            user = User.get_by_email(email)
-            applicant_name = request.form['applicantName']
-            applicant_father_name = request.form['applicantFatherName']
-            loan_category = request.form['loanCategory']
-            age = request.form['age']
-            gender = request.form['gender']
-            address = request.form['address']
-            district = request.form['district']
-            annual_income = request.form['annualIncome']
-            caste = request.form['caste']
-            bank = request.form['bankName']
-            sub_bank = request.form['subBank']
-            loan_reason = request.form['loanReason']
-            loan_amount = request.form['loanAmount']
-            loanNumber = request.form['loanNumber']
-            received_date = request.form['receivedDate']
-            roi = request.form['interest']
-            screening_date = request.form['screeningDate']
-            jr_letter_date = request.form['jrLetterDate']
-            jr_letter_number = request.form['jrLetterNumber']
-            no_of_demands = request.form['noOfDemands']
-            status = request.form['status']
-            status_date = request.form['statusDate']
-            ann_loan_id = request.form['annualLoanID']
-            no_of_shgs = request.form['shgCount']
-            user_id = user._id
-            user_name = user.username
-            n1 = request.form['n1']
-            s1 = request.form['s1']
-
-            if request.form['a1']:
-                a1 = int(request.form['a1'])*int(request.form['s1'])
-            else:
-                a1 = None
-            n2 = request.form['n2']
-            s2 = request.form['s2']
-            if request.form['a2']:
-                a2 = int(request.form['a2'])*int(request.form['s2'])
-            else:
-                a2 = None
-            n3 = request.form['n3']
-            s3 = request.form['s3']
-            if request.form['a3']:
-                a3 = int(request.form['a3'])*int(request.form['s3'])
-            else:
-                a3 = None
-            n4 = request.form['n4']
-            s4 = request.form['s4']
-            if request.form['a4']:
-                a4 = int(request.form['a4'])*int(request.form['s4'])
-            else:
-                a4 = None
-            n5 = request.form['n5']
-            s5 = request.form['s5']
-            if request.form['a5']:
-                a5 = int(request.form['a5'])*int(request.form['s5'])
-            else:
-                a5 = None
-            n6 = request.form['n6']
-            s6 = request.form['s6']
-            if request.form['a6']:
-                a6 = int(request.form['a6'])*int(request.form['s6'])
-            else:
-                a6 = None
-            n7 = request.form['n7']
-            s7 = request.form['s7']
-            if request.form['a7']:
-                a7 = int(request.form['a7'])*int(request.form['s7'])
-            else:
-                a7 = None
-            n8 = request.form['n8']
-            s8 = request.form['s8']
-            if request.form['a8']:
-                a8 = int(request.form['a8'])*int(request.form['s8'])
-            else:
-                a8 = None
-            n9 = request.form['n9']
-            s9 = request.form['s9']
-            if request.form['a9']:
-                a9 = int(request.form['a9'])*int(request.form['s9'])
-            else:
-                a9 = None
-            n10 = request.form['n10']
-            s10 = request.form['s10']
-            if request.form['a10']:
-                a10 = int(request.form['a10'])*int(request.form['s10'])
-            else:
-                a10 = None
-            app1 = request.form['app1']
-            app2 = request.form['app2']
-            app3 = request.form['app3']
-            app4 = request.form['app4']
-            app5 = request.form['app5']
-            app6 = request.form['app6']
-            app7 = request.form['app7']
-            app8 = request.form['app8']
-            app9 = request.form['app9']
-            app10 = request.form['app10']
-            no_of_beneficiaries = request.form['beneficiaryCount']
-            pso_date = request.form['psoDate']
-            ro_date = request.form['roDate']
-            cheque_number = request.form['chequeNumber']
-
-            account_head = "Loan To "+loan_category
-            if status == "Covering Letter":
-                account = Account(invoice_date=status_date, nature_of_transaction="Debit",
-                                  account_head=account_head, amount=loan_amount, loan_id=_id,
-                                  user_id=user_id, user_name=user_name, depositing_bank=bank, ledger="Sub",
-                                  cleared="No", cheque_date=status_date)
-                account.save_to_mongo()
 
             application = Database.find("loans", {"_id": _id})
-            amount_to_pay = 0
+
+            annual_loan_id, loan_category = None, None
 
             for result_object in application[0:1]:
+                loan_category = result_object['loan_category']
+                annual_loan_id = result_object['ann_loan_id']
+
+            user = User.get_by_email(email)
+
+            if loan_category == "GTL (General Term Loan)" or loan_category == "NSS (New-Swarnima Scheme)":
+                return render_template('update_loan_app_form.html', user=user, application_id=_id)
+            else:
+                return render_template('shg_update_loan_app_form.html', user=user, application_id=_id,
+                                       annual_loan_id=annual_loan_id)
+
+        else:
+            application = Database.find("loans", {"_id": _id})
+
+            annual_loan_id, loan_category = None, None
+
+            for result_object in application[0:1]:
+                loan_category = result_object['loan_category']
+                annual_loan_id = result_object['ann_loan_id']
                 amount_to_pay = result_object['amount_yet_to_pay']
 
-            LoanApplication.update_loan_app(applicant_name=applicant_name, loan_category=loan_category, age=age,
-                                            gender=gender, address=address, district=district,
-                                            annual_income=annual_income,
-                                            caste=caste, bank=bank, loan_reason=loan_reason, loan_amount=loan_amount,
-                                            received_date=received_date, status=status, status_date=status_date,
-                                            ann_loan_id=ann_loan_id, user_id=user_id, user_name=user_name, n1=n1,
-                                            s1=s1, a1=a1, n2=n2, s2=s2, a2=a2, n3=n3, s3=s3, a3=a3, n4=n4, s4=s4,
-                                            a4=a4, n5=n5, s5=s5, a5=a5, n6=n6, s6=s6, a6=a6, n7=n7,
-                                            s7=s7, a7=a7, n8=n8, s8=s8, a8=a8, n9=n9, s9=s9, a9=a9, n10=n10, s10=s10,
-                                            a10=a10, no_of_beneficiaries=no_of_beneficiaries, no_of_shgs=no_of_shgs,
-                                            app1=app1, app2=app2, app3=app3, app4=app4, app5=app5, app6=app6, app7=app7,
-                                            app8=app8, app9=app9, app10=app10, loan_id=_id, cheque_number=cheque_number,
-                                            roi=roi, no_of_demands=no_of_demands, sub_bank=sub_bank,
-                                            amount_to_pay=amount_to_pay, father_name=applicant_father_name,
-                                            loan_number=loanNumber, screening_date=screening_date,
-                                            jr_letter_number=jr_letter_number, jr_letter_date=jr_letter_date,
-                                            ro_date=ro_date, pso_date=pso_date)
+            if loan_category == "GTL (General Term Loan)" or loan_category == "NSS (New-Swarnima Scheme)":
+                user = User.get_by_email(email)
+                applicant_name = request.form['applicantName']
+                applicant_father_name = request.form['applicantFatherName']
+                loan_category = request.form['loanCategory']
+                age = request.form['age']
+                gender = request.form['gender']
+                address = request.form['address']
+                district = request.form['district']
+                annual_income = request.form['annualIncome']
+                caste = request.form['caste']
+                bank = request.form['bankName']
+                sub_bank = request.form['subBank']
+                loan_reason = request.form['loanReason']
+                loan_amount = request.form['loanAmount']
+                loanNumber = request.form['loanNumber']
+                received_date = request.form['receivedDate']
+                roi = request.form['interest']
+                screening_date = request.form['screeningDate']
+                jr_letter_date = request.form['jrLetterDate']
+                jr_letter_number = request.form['jrLetterNumber']
+                no_of_demands = request.form['noOfDemands']
+                status = request.form['status']
+                status_date = request.form['statusDate']
+                ann_loan_id = request.form['annualLoanID']
+                no_of_shgs = request.form['shgCount']
+                user_id = user._id
+                user_name = user.username
+                pso_date = request.form['psoDate']
+                ro_date = request.form['roDate']
+                ro_number = request.form['roNumber']
+                cheque_number = request.form['chequeNumber']
 
-            return render_template('application_added_update.html', user=user, application_id=_id)
+                account_head = "Loan To "+loan_category
+                if status == "Covering Letter":
+                    account = Account(invoice_date=status_date, nature_of_transaction="Debit",
+                                      account_head=account_head, amount=loan_amount, loan_id=_id,
+                                      user_id=user_id, user_name=user_name, depositing_bank=bank, ledger="Sub",
+                                      cleared="No", cheque_date=status_date)
+                    account.save_to_mongo()
+
+                application = Database.find("loans", {"_id": _id})
+                amount_to_pay = 0
+
+                for result_object in application[0:1]:
+                    amount_to_pay = result_object['amount_yet_to_pay']
+
+                LoanApplication.update_loan_app(applicant_name=applicant_name, loan_category=loan_category, age=age,
+                                                gender=gender, address=address, district=district,
+                                                annual_income=annual_income,
+                                                caste=caste, bank=bank, loan_reason=loan_reason, loan_amount=loan_amount,
+                                                received_date=received_date, status=status, status_date=status_date,
+                                                ann_loan_id=ann_loan_id, user_id=user_id, user_name=user_name,
+                                                no_of_shgs=no_of_shgs, loan_id=_id, cheque_number=cheque_number,
+                                                roi=roi, no_of_demands=no_of_demands, sub_bank=sub_bank,
+                                                amount_to_pay=amount_to_pay, father_name=applicant_father_name,
+                                                loan_number=loanNumber, screening_date=screening_date,
+                                                jr_letter_number=jr_letter_number, jr_letter_date=jr_letter_date,
+                                                ro_date=ro_date, pso_date=pso_date, amount_per_member=None,
+                                                strength=None, shg_name=None, ro_number=ro_number)
+
+                return render_template('application_added_update.html', user=user, application_id=_id)
+
+            else:
+                user = User.get_by_email(email)
+                loan_category = request.form['loanCategory']
+                district = request.form['district']
+                bank = request.form['bankName']
+                sub_bank = request.form['subBank']
+                loan_reason = request.form['loanReason']
+                loanNumber = request.form['loanNumber']
+                loan_amount = request.form['loanAmount']
+                received_date = request.form['receivedDate']
+                screening_date = request.form['screeningDate']
+                roi = request.form['interest']
+                no_of_demands = request.form['noOfDemands']
+                status = request.form['status']
+                status_date = request.form['statusDate']
+                jr_letter_date = request.form['jrLetterDate']
+                jr_letter_number = request.form['jrLetterNumber']
+                ann_loan_id = request.form['annualLoanID']
+                no_of_shgs = int(request.form['shgCount'])
+                inv_id = int(request.form['invIDCTR'])
+                user_id = user._id
+                user_name = user.username
+                cheque_number = request.form['chequeNumber']
+                ro_date = request.form['roDate']
+                ro_number = request.form['roNumber']
+
+                for i in range(int(inv_id)):
+                    shg_name_string = "sn" + str(i)
+                    amount_per_member_string = "apm" + str(i)
+                    strength_string = "strength" + str(i)
+                    ta = "ta" + str(i)
+                    shg_name = request.form[shg_name_string]
+                    amount_per_member = request.form[amount_per_member_string]
+                    strength = request.form[strength_string]
+
+                    LoanApplication.update_loan_app(applicant_name=applicant_name, loan_category=loan_category, age=age,
+                                                    gender=gender, address=address, district=district,
+                                                    annual_income=annual_income, caste=caste, bank=bank, loan_reason=loan_reason,
+                                                    loan_amount=loan_amount, received_date=received_date, status=status,
+                                                    status_date=status_date, ann_loan_id=ann_loan_id, user_id=user_id, user_name=user_name,
+                                                    no_of_shgs=no_of_shgs, loan_id=_id, cheque_number=cheque_number,
+                                                    roi=roi, no_of_demands=no_of_demands, sub_bank=sub_bank,
+                                                    amount_to_pay=amount_to_pay, father_name=applicant_father_name,
+                                                    loan_number=loanNumber, screening_date=screening_date,
+                                                    jr_letter_number=jr_letter_number, jr_letter_date=jr_letter_date,
+                                                    ro_date=ro_date, pso_date=None, amount_per_member=amount_per_member,
+                                                    strength=strength, shg_name=shg_name, ro_number=ro_number)
+
+                    application.save_to_mongo()
+
+                    print(application.ro_date)
+
+                return render_template('application_added_update.html', application=application, user=user)
 
     else:
         return render_template('login_fail.html')

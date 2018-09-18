@@ -1,7 +1,7 @@
 {% extends "post_login_loans.html" %}
 {% block content %}
 
-<form id="new-intent" action="/new_loanApplication/{{ user._id }}" method="post">
+<form id="new-intent" action="/updateApplication/{{ application_id }}" method="post">
 
 <div style="display: flex; flex-direction: column; align-items: center; flex: 1; justify-content: space-around; margin-top: 10px">
 
@@ -15,36 +15,9 @@
         </select>
     </div>
 
-    <div class="form-group" style="display: block; width: 38%" id="nameOfApplicant">
-        <label for="applicantName">Applicant Name</label>
-        <input type="text" id="applicantName" name="applicantName" style="display: block; width: 100%">
-    </div>
-
-    <div class="form-group" style="display: block; width: 38%" id="nameOfApplicantFather">
-        <label for="applicantFatherName">Applicant's Father Name</label>
-        <input type="text" id="applicantFatherName" name="applicantFatherName" style="display: block; width: 100%">
-    </div>
-
-    <div class="form-group" style="display: block; width: 38%" id="ageOfApplicant">
-        <label for="age">Age</label>
-        <input type="number" id="age" min="18" max="60" name="age" style="display: block; width: 100%">
-        <label for="gender">Gender</label>
-        <select class="form-control" id="gender" name="gender">
-            {% set genders = ['Male', 'Female', 'Third-Gender'] %}
-            {% for gender in genders %}
-                <option value= "{{gender}}">{{gender}}</option>"
-            {% endfor %}
-        </select>
-    </div>
-
-    <div class="form-group" style="display: block; width: 38%" id="addressOfApplicant">
-        <label for="address">Address of Applicant</label>
-        <input type="text" id="address" name="address" style="display: block; width: 100%">
-    </div>
-
     <div class="form-group">
           <label for="district">Select District:</label>
-          <select class="form-control" style="text-align: center;" id="district" name="district" onchange="createNewFields()">
+          <select class="form-control" style="text-align: center;" id="district" name="district">
             {% set districts = ['Ariyalur', 'Karur', 'Nagapattinam', 'Perambalur',
               'Pudukkottai', 'Thanjavur', 'Tiruchirappalli','Tiruvarur', 'Dharmapuri',
               'Coimbatore', 'Erode', 'Krishnagiri', 'Namakkal', 'The Nilgiris', 'Salem',
@@ -56,18 +29,6 @@
                 <option value= "{{district}}">{{district}}</option>"
             {% endfor %}
           </select>
-    </div>
-
-    <div class="form-group" style="display: block; width: 38%" id="personalInfo">
-        <label for="annualIncome">Annual Income (in Rs.)</label>
-        <input type="number" id="annualIncome" name="annualIncome" style="display: block; width: 100%">
-        <label for="caste">Caste</label>
-        <select class="form-control" id="caste" name="caste">
-            {% set castes = ['BC', 'MBC', 'DNC'] %}
-            {% for caste in castes %}
-                <option value= "{{caste}}">{{caste}}</option>"
-            {% endfor %}
-        </select>
     </div>
 
     <div class="form-group" style="display: block; width: 38%">
@@ -88,10 +49,10 @@
         <button type="button"><a onclick="populateTotals()">Done</a></button>
     </div>
 
-    <div id="shgDetails" class="form-group" style="display: none;">
+    <div id="shgDetails" class="form-group">
     </div>
 
-    <div id="BenCount" style="display: none;">
+    <div id="BenCount">
         <label for="beneficiaryCount">Beneficiary Count</label>
         <input type="number" id="beneficiaryCount" name="beneficiaryCount">
 
@@ -161,7 +122,7 @@
             <label for="loanNumber">PSO Number</label>
             <input type="number" id="loanNumber" name="loanNumber">
         </div>
-        <div>
+        <div id="ron">
             <label for="roNumber">RO Number</label>
             <input type="number" id="roNumber" name="roNumber">
         </div>
@@ -196,84 +157,104 @@
 
 <script>
 
-    var i = 0;
+    var j = 0;
+    var total_loan_amount = 0;
+    var total_ben_count = 0;
 
-    function categorySelection(that) {
-        console.log(that.value);
-        if (that.value === "MCG (Micro-Credit Gents)" || that.value === "MSY (Mahila Samriddhi Yojana)"){
-            document.getElementById("shgDetails").style.display = "flex";
-            document.getElementById("shgDetails").style.flexDirection = "column";
-            document.getElementById("shgDetails").style.justifyContent = "space-between";
-            document.getElementById("nameOfApplicant").style.display = "none";
-            document.getElementById("ageOfApplicant").style.display = "none";
-            document.getElementById("addressOfApplicant").style.display = "none";
-            document.getElementById("personalInfo").style.display = "none";
-            document.getElementById("age").style.display = "none";
-            document.getElementById("nameOfApplicantFather").style.display = "none";
-            document.getElementById("psod").style.display = "none";
-            document.getElementById("pson").style.display = "none";
-            document.getElementById("BenCount").style.display = "";
-            document.getElementById("shgCount").style.display = "";
-        }
-        else {
-            document.getElementById("shgDetails").style.display = "none";
-            document.getElementById("nameOfApplicant").style.display = "";
-            document.getElementById("nameOfApplicantFather").style.display = "";
-            document.getElementById("ageOfApplicant").style.display = "";
-            document.getElementById("addressOfApplicant").style.display = "";
-            document.getElementById("personalInfo").style.display = "";
-            document.getElementById("BenCount").style.display = "none";
-            document.getElementById("shgCount").style.display = "none";
-        }
-    }
+    var source = "/getLoansByIdentfierLoans/"+"{{annual_loan_id}}";
+    $.ajax({
+        type: 'GET',
+        url: source,
+        contentType: "application/json",
+        dataType: 'json',
+        success: function (json){
+            console.log(json);
 
-    function createNewFields() {
-        var shg_det = $("#shgDetails");
-        shg_det.empty();
+            for(var i=0; i < json.length; i++) {
+            var shg_det = $("#shgDetails");
+                var shg_name = "sn"+i;
+                var inputSNO = "sno"+i;
+                var amount_pm = "apm"+i;
+                var strength = "strength"+i;
+                var total_amount = "ta"+i;
+            var row = $('<div style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;"></div>')
+                .html(
+                    '<div style="display: flex; flex-direction: column;">' +
+                    '<label for='+shg_name+'>SHG Name</label>' +
+                    '<input type="text" id='+shg_name+' name='+shg_name+'>' +
+                    '</div>' +
+                    '<div style="display: flex; flex-direction: column;">' +
+                    '<label for='+strength+'>Strength</label>' +
+                    '<input type="text" id='+strength+' name='+strength+'>' +
+                    '</div>' +
+                    '<div style="display: flex; flex-direction: column;">' +
+                    '<label for='+amount_pm+'>Amount Per Member</label>' +
+                    '<input type="text" id='+amount_pm+' name='+amount_pm+' >' +
+                    '</div>'+
+                    '<div style="display: flex; flex-direction: column;">' +
+                    '<label for='+total_amount+'>Total Amount</label>' +
+                    '<input type="text" id='+total_amount+' name='+total_amount+'>' +
+                    '</div>'
+                );
+            shg_det.append(row);
+            j=i;
+            }
+            populateFields();
+        },
+            error: function (e) {
+                alert("error");
+            }
+        });
+
+    function populateFields() {
+    $.ajax({
+        type: 'GET',
+        url: source,
+        contentType: "application/json",
+        dataType: 'json',
+        success: function (json){
+                document.getElementById("loanCategory").value = json[0]["loan_category"];
+                document.getElementById("district").value = json[0]["district"];
+                document.getElementById("bankName").value = json[0]["bank"];
+                document.getElementById("subBank").value = json[0]["sub_bank"];
+                document.getElementById("interest").value = json[0]["roi"];
+                document.getElementById("noOfDemands").value = json[0]["no_of_demands"];
+                document.getElementById("loanReason").value = json[0]["loan_reason"];
+                document.getElementById("loanNumber").value = json[0]["loan_number"];
+                document.getElementById("status").value = json[0]["status"];
+                document.getElementById("jrLetterNumber").value = json[0]["jr_letter_number"];
+                document.getElementById("annualLoanID").value = json[0]["ann_loan_id"];
+                document.getElementById("receivedDate").value = moment(json[0]["received_date"]['$date']).format("YYYY-MM-DD");
+                document.getElementById("statusDate").value = moment(json[0]["status_date"]['$date']).format("YYYY-MM-DD");
+                document.getElementById("jrLetterDate").value = moment(json[0]["jr_letter_date"]['$date']).format("YYYY-MM-DD");
+                document.getElementById("screeningDate").value = moment(json[0]["screening_date"]['$date']).format("YYYY-MM-DD");
+                document.getElementById("roDate").value = moment(json[0]["ro_date"]['$date']).format("YYYY-MM-DD");
+            for(var i=0; i < json.length; i++) {
             var shg_name = "sn"+i;
-            var inputSNO = "sno"+i;
             var amount_pm = "apm"+i;
             var strength = "strength"+i;
             var total_amount = "ta"+i;
-        var row = $('<div style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;"></div>')
-            .html(
-                '<div style="display: flex; flex-direction: column;">' +
-                '<label for='+inputSNO+'>S.No</label>' +
-                '<input class="amount" type="number" id='+inputSNO+' name='+inputSNO+' value='+(i+1)+'>' +
-                '</div>' +
-                '<div style="display: flex; flex-direction: column;">' +
-                '<label for='+shg_name+'>SHG Name</label>' +
-                '<input type="text" id='+shg_name+' name='+shg_name+'>' +
-                '</div>' +
-                '<div style="display: flex; flex-direction: column;">' +
-                '<label for='+strength+'>Strength</label>' +
-                '<input type="text" id='+strength+' name='+strength+'>' +
-                '</div>' +
-                '<div style="display: flex; flex-direction: column;">' +
-                '<label for='+amount_pm+'>Amount Per Member</label>' +
-                '<input type="text" id='+amount_pm+' name='+amount_pm+' onchange="calculateTotal(this)">' +
-                '</div>'+
-                '<div style="display: flex; flex-direction: column;">' +
-                '<label for='+total_amount+'>Total Amount</label>' +
-                '<input type="text" id='+total_amount+' name='+total_amount+'>' +
-                '</div>'
-            );
-        shg_det.append(row);
-        i++
+            document.getElementById(shg_name).value = json[i]['shg_name'];
+            document.getElementById(amount_pm).value = json[i]['amount_per_member'];
+            document.getElementById(strength).value = json[i]['strength'];
+            document.getElementById(total_amount).value = json[i]['total_amount'];
+            total_loan_amount += json[i]['total_amount'];
+            total_ben_count += json[i]['strength'];
+            }
+        },
+            error: function (e) {
+                alert("error");
+            }
+        });
     }
 
     function addAnotherField() {
-
-        var shg_name = "sn"+i;
-        var inputSNO = "sno"+i;
-        var amount_pm = "apm"+i;
-        var strength = "strength"+i;
-        var total_amount = "ta"+i;
+        var shg_name = "sn"+j;
+        var amount_pm = "apm"+j;
+        var strength = "strength"+j;
+        var total_amount = "ta"+j;
         var row = $('<div style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;"></div>')
             .html(
-                '<div style="display: flex; flex-direction: column;">' +
-                '<input type="number" id='+inputSNO+' name='+inputSNO+' value='+(i+1)+'>' +
-                '</div>' +
                 '<div style="display: flex; flex-direction: column;">' +
                 '<input type="text" id='+shg_name+' name='+shg_name+'>' +
                 '</div>' +
@@ -288,11 +269,8 @@
                 '</div>'
             );
         $("#shgDetails").append(row);
-        i++;
+        j++;
     }
-
-    var total_loan_amount = 0;
-    var total_ben_count = 0;
 
     function calculateTotal(that) {
         var str = that.id;
@@ -308,10 +286,11 @@
         document.getElementById(total_tag_id).value = total_shg_amount;
         total_loan_amount += total_shg_amount;
         total_ben_count += parseInt(strength);
-        document.getElementById("invIDCTR").value = (i-1);
+        document.getElementById("invIDCTR").value = (j-1);
     }
 
     function populateTotals() {
+        document.getElementById("invIDCTR").value = (j-1);
         document.getElementById('beneficiaryCount').value = total_ben_count;
         document.getElementById('loanAmount').value = total_loan_amount;
     }

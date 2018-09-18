@@ -98,7 +98,7 @@
 //                    doc.text(37, 75, sub);
 //
                     var ref = doc.splitTextToSize('Ref:  The Joint Registrar of Co-Operative Societies ' +
-                        json[0]['district'] + ' LR. No. '+json[0]['jr_letter_number'] +' Dated: '+moment(json[0]['jr_letter_date']['$date']).format('YYYY-MM-DD') +' Screening Committee Date: ' + moment(json[0]['screening_date']['$date']).format('YYYY-MM-DD'), 140);
+                        json[0]['district'] + ' LR. No. '+json[0]['jr_letter_number'] +' Dated: '+moment(json[0]['jr_letter_date']['$date']).format('DD-MM-YYYY') +' Screening Committee Date: ' + moment(json[0]['screening_date']['$date']).format('DD-MM-YYYY'), 140);
 //
 //                    doc.text(37, 95, ref);
 //                    doc.text(100, 110, '**********');
@@ -381,7 +381,7 @@
                     doc.text(37, 95, sub);
 
                     var ref = doc.splitTextToSize('Ref:  The Joint Registrar of Co-Operative Societies ' +
-                        json[0]['district'] + ' LR. No. '+json[0]['jr_letter_number'] +' Dated: '+moment(json[0]['jr_letter_date']['$date']).format('YYYY-MM-DD') +' Screening Committee Date: ' + moment(json[0]['screening_date']['$date']).format('YYYY-MM-DD'), 140);
+                        json[0]['district'] + ' LR. No. '+json[0]['jr_letter_number'] +' Dated: '+moment(json[0]['jr_letter_date']['$date']).format('DD-MM-YYYY') +' Screening Committee Date: ' + moment(json[0]['screening_date']['$date']).format('DD-MM-YYYY'), 140);
 
                     doc.text(37, 105, ref);
                     doc.text(100, 115, '**********');
@@ -745,7 +745,7 @@
     function downloadROFC() {
     var doc = new jsPDF();
     var MD = 'N. Venkatachalam';
-    var source = "/loan/"+"{{application_id}}";
+    var source = "/getLoansByIdentfierLoans/"+"{{annual_loan_id}}";
     $.ajax({
         type: 'GET',
         url: source,
@@ -753,8 +753,10 @@
         dataType: 'json',
         success: function (json) {
 
+            console.log(json);
+
                 if(!json[0]['ro_date']['$date']) {
-                    alert('Update PSO Date!');
+                    alert('Update PSO/RO Date!');
                 }
 
             if(json[0]['loan_category'] === 'GTL (General Term Loan)') {
@@ -776,7 +778,30 @@
                     if (json[0]['loan_category'] === 'MCG (Micro-Credit Gents)' || json[0]['loan_category'] === 'MSY (Mahila Samriddhi Yojana)') {
                         var PSO = json[0]['loan_number'] + '/' + cat + '/' + (moment(json[0]['received_date']).year() - 2000) + '' + (moment(json[0]['received_date']).year() - 1999);
 
-                        var sanction_amount = (NBCFDCShareCalculator(json[0]['loan_category'], json[0]['loan_amount'])+ tabcedcoShareCalculator(json[0]['loan_category'], json[0]['loan_amount']));
+                        var total_shg_amount = 0;
+
+                        for (var abc = 0; abc < json.length; abc++) {
+                            total_shg_amount += json[abc]['total_amount'];
+                        }
+
+                        var sanction_amount = (NBCFDCShareCalculator(json[0]['loan_category'], total_shg_amount)+ tabcedcoShareCalculator(json[0]['loan_category'], total_shg_amount));
+
+                var aggregatedData = d3.nest()
+                    .key(function (d) {
+                        return d.shg_name;
+                    })
+                    .rollup(
+                        function(leaves)
+                        {
+                            return {
+                                "total_members": d3.sum(leaves, function(d) {return parseInt(d.strength);}),
+                                "total_shg_loan": d3.sum(leaves, function(d) {return parseInt(d.total_amount);})
+                            }
+                        })
+                    .entries(json);
+
+                console.log(aggregatedData);
+
 
                         doc.setFontSize(12);
                         doc.text(150, 20, PSO);
@@ -820,10 +845,11 @@
                         var rows = [];
         //            [[json[0]['bank'], json[0]['shg1'].name, json[0]['shg1'].strength, json[0]['shg1'].amount]]; json[0]['no_of_shgs']
 
-                        for (var i = 1; i <= parseInt(json[0]['no_of_shgs']); i++) {
-                            var shgString = 'shg' + i;
-                            rows.push([[json[0]['bank']], [[json[0][shgString].name]], [[json[0][shgString].strength]], [(NBCFDCShareCalculator(json[0]['loan_category'], json[0][shgString].amount)+ tabcedcoShareCalculator(json[0]['loan_category'], json[0][shgString].amount))]]);
-                            total_strength += parseInt(json[0][shgString].strength);
+                        for (var i = 0; i < aggregatedData.length; i++) {
+                            rows.push([[json[0]['bank']], [[aggregatedData[i].key]], [[aggregatedData[i].values['total_members']]],
+                                [(NBCFDCShareCalculator(json[0]['loan_category'], aggregatedData[i].values['total_shg_loan'])+
+                                tabcedcoShareCalculator(json[0]['loan_category'], aggregatedData[i].values['total_shg_loan']))]]);
+                            total_strength += parseInt(aggregatedData[i].values['total_members']);
                         }
 
                         rows.push([[['Grand Total']], [['']], [[total_strength]], [[sanction_amount]]]);
@@ -861,7 +887,7 @@
                             'Managing Director,' + json[0]['bank'] + ', ' + json[0]['district'] + ' with proper acquittance.', 160);
                         doc.text(34, doc.autoTableEndPosY() + 45, pt6);
 
-                        doc.text(165, doc.autoTableEndPosY() + 65, 'Signed xxxxxxx');
+                        doc.text(165, doc.autoTableEndPosY() + 65, 'Sd/ xxxxxxx');
                         doc.text(165, doc.autoTableEndPosY() + 75, 'Managing Director');
 
                         doc.text(40, doc.autoTableEndPosY() + 90, 'To');
@@ -899,7 +925,13 @@
 
                         doc.text(160, 55, 'Dated: ' + (moment(json[0]['ro_date']).format("DD-MM-YYYY")));
 
-                        var sanctioned_amount = parseInt(NBCFDCShareCalculator(json[0]['loan_category'], json[0]['loan_amount'])) + parseInt(tabcedcoShareCalculator(json[0]['loan_category'], json[0]['loan_amount']));
+                        var total_individual_amount = 0;
+
+                        for (abc = 0; abc < json.length; abc++) {
+                            total_individual_amount += json[abc]['loan_amount'];
+                        }
+
+                        var sanctioned_amount = (NBCFDCShareCalculator(json[0]['loan_category'], total_individual_amount)+ tabcedcoShareCalculator(json[0]['loan_category'], total_individual_amount));
 
                         var sub = doc.splitTextToSize('Sub:  Tamil Nadu Backward Classes Economic Development Corporation Ltd., Chennai 600008' +
                             'Disbursement of Individual Loan under ' + json[0]['loan_category'] + ' to ' + json[0]['applicant_name'] + ' - Final Sanction' +
@@ -977,7 +1009,7 @@
                         doc.text(25, doc.autoTableEndPosY()+10, AAO);
                         doc.text(25, doc.autoTableEndPosY()+30, 'The details of schedule of repayment is enclosed.');
 
-                        doc.text(165, doc.autoTableEndPosY() + 65, 'Signed xxxxxxxx');
+                        doc.text(165, doc.autoTableEndPosY() + 65, 'Sd/ ------');
                         doc.text(165, doc.autoTableEndPosY() + 75, 'Managing Director');
 
                         doc.text(40, doc.autoTableEndPosY() + 90, 'To');
@@ -1011,7 +1043,7 @@
     function downloadROOC() {
     var doc = new jsPDF();
     var MD = 'N. Venkatachalam';
-    var source = "/loan/"+"{{application_id}}";
+    var source = "/getLoansByIdentfierLoans/"+"{{annual_loan_id}}";
     $.ajax({
         type: 'GET',
         url: source,
@@ -1038,7 +1070,30 @@
                     if (json[0]['loan_category'] === 'MCG (Micro-Credit Gents)' || json[0]['loan_category'] === 'MSY (Mahila Samriddhi Yojana)') {
                         var PSO = json[0]['loan_number'] + '/' + cat + '/' + (moment(json[0]['received_date']).year() - 2000) + '' + (moment(json[0]['received_date']).year() - 1999);
 
-                        var sanction_amount = (NBCFDCShareCalculator(json[0]['loan_category'], json[0]['loan_amount'])+ tabcedcoShareCalculator(json[0]['loan_category'], json[0]['loan_amount']));
+                        var total_shg_amount = 0;
+
+                        for (var abc = 0; abc < json.length; abc++) {
+                            total_shg_amount += json[abc]['total_amount'];
+                        }
+
+                        var sanction_amount = (NBCFDCShareCalculator(json[0]['loan_category'], total_shg_amount)+ tabcedcoShareCalculator(json[0]['loan_category'], total_shg_amount));
+
+                var aggregatedData = d3.nest()
+                    .key(function (d) {
+                        return d.shg_name;
+                    })
+                    .rollup(
+                        function(leaves)
+                        {
+                            return {
+                                "total_members": d3.sum(leaves, function(d) {return parseInt(d.strength);}),
+                                "total_shg_loan": d3.sum(leaves, function(d) {return parseInt(d.total_amount);})
+                            }
+                        })
+                    .entries(json);
+
+                console.log(aggregatedData);
+
 
                         doc.setFontSize(12);
                         doc.text(150, 20, PSO);
@@ -1082,10 +1137,11 @@
                         var rows = [];
         //            [[json[0]['bank'], json[0]['shg1'].name, json[0]['shg1'].strength, json[0]['shg1'].amount]]; json[0]['no_of_shgs']
 
-                        for (var i = 1; i <= parseInt(json[0]['no_of_shgs']); i++) {
-                            var shgString = 'shg' + i;
-                            rows.push([[json[0]['bank']], [[json[0][shgString].name]], [[json[0][shgString].strength]], [(NBCFDCShareCalculator(json[0]['loan_category'], json[0][shgString].amount)+ tabcedcoShareCalculator(json[0]['loan_category'], json[0][shgString].amount))]]);
-                            total_strength += parseInt(json[0][shgString].strength);
+                        for (var i = 0; i < aggregatedData.length; i++) {
+                            rows.push([[json[0]['bank']], [[aggregatedData[i].key]], [[aggregatedData[i].values['total_members']]],
+                                [(NBCFDCShareCalculator(json[0]['loan_category'], aggregatedData[i].values['total_shg_loan'])+
+                                tabcedcoShareCalculator(json[0]['loan_category'], aggregatedData[i].values['total_shg_loan']))]]);
+                            total_strength += parseInt(aggregatedData[i].values['total_members']);
                         }
 
                         rows.push([[['Grand Total']], [['']], [[total_strength]], [[sanction_amount]]]);
@@ -1123,6 +1179,7 @@
                             'Managing Director,' + json[0]['bank'] + ', ' + json[0]['district'] + ' with proper acquittance.', 160);
                         doc.text(34, doc.autoTableEndPosY() + 45, pt6);
 
+                        doc.text(165, doc.autoTableEndPosY() + 65, 'Accepted');
                         doc.text(165, doc.autoTableEndPosY() + 75, 'Managing Director');
 
                         doc.text(40, doc.autoTableEndPosY() + 90, 'To');
@@ -1160,7 +1217,13 @@
 
                         doc.text(160, 55, 'Dated: ');
 
-                        var sanctioned_amount = parseInt(NBCFDCShareCalculator(json[0]['loan_category'], json[0]['loan_amount'])) + parseInt(tabcedcoShareCalculator(json[0]['loan_category'], json[0]['loan_amount']));
+                        var total_individual_amount = 0;
+
+                        for (abc = 0; abc < json.length; abc++) {
+                            total_individual_amount += json[abc]['loan_amount'];
+                        }
+
+                        var sanctioned_amount = (NBCFDCShareCalculator(json[0]['loan_category'], total_individual_amount)+ tabcedcoShareCalculator(json[0]['loan_category'], total_individual_amount));
 
                         var sub = doc.splitTextToSize('Sub:  Tamil Nadu Backward Classes Economic Development Corporation Ltd., Chennai 600008' +
                             'Disbursement of Individual Loan under ' + json[0]['loan_category'] + ' to ' + json[0]['applicant_name'] + ' - Final Sanction' +

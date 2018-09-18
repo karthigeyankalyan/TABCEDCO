@@ -230,6 +230,10 @@
             <label for="loanNumber">PSO Number</label>
             <input type="number" id="loanNumber" name="loanNumber">
         </div>
+        <div>
+            <label for="roNumber">RO Number</label>
+            <input type="number" id="roNumber" name="roNumber">
+        </div>
     </div>
 
     <div class="form-group" style="display: flex; flex-direction: row; justify-content: space-between;">
@@ -309,6 +313,7 @@
                 document.getElementById("status").value = json[0]["status"];
                 document.getElementById("jrLetterNumber").value = json[0]["jr_letter_number"];
                 document.getElementById("annualLoanID").value = json[0]["ann_loan_id"];
+                document.getElementById("roNumber").value = json[0]["ro_number"];
                 document.getElementById("receivedDate").value = moment(json[0]["received_date"]['$date']).format("YYYY-MM-DD");
                 document.getElementById("statusDate").value = moment(json[0]["status_date"]['$date']).format("YYYY-MM-DD");
                 document.getElementById("jrLetterDate").value = moment(json[0]["jr_letter_date"]['$date']).format("YYYY-MM-DD");
