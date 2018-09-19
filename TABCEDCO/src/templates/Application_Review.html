@@ -668,7 +668,6 @@
                                 var district = uberLoan[0]['district'];
                                 doc.text(165, 55, district);
 
-                                var amount = uberLoan[0]['loan_amount'];
                                 var NBCShare = NBCFDCShareCalculator(uberLoan[0]['loan_category'], total_loan_amount);
                                 var TabcedcoShare = tabcedcoShareCalculator(uberLoan[0]['loan_category'], total_loan_amount);
 
@@ -773,20 +772,24 @@
             }
 
             if(json.length !== 0) {
-                console.log(json);
                     // Checking if the loan category is either Micro Credit or Mahila Samriddhi Yojana
                     if (json[0]['loan_category'] === 'MCG (Micro-Credit Gents)' || json[0]['loan_category'] === 'MSY (Mahila Samriddhi Yojana)') {
-                        var PSO = json[0]['loan_number'] + '/' + cat + '/' + (moment(json[0]['received_date']).year() - 2000) + '' + (moment(json[0]['received_date']).year() - 1999);
+                        var PSO = json[0]['ro_number'] + '/' + cat + '/' + (moment(json[0]['received_date']).year() - 2000) + '' + (moment(json[0]['received_date']).year() - 1999);
 
                         var total_shg_amount = 0;
+                        var total_ben_shg_count = 0;
 
                         for (var abc = 0; abc < json.length; abc++) {
                             total_shg_amount += json[abc]['total_amount'];
+                            total_ben_shg_count += json[abc]['strength'];
                         }
 
                         var sanction_amount = (NBCFDCShareCalculator(json[0]['loan_category'], total_shg_amount)+ tabcedcoShareCalculator(json[0]['loan_category'], total_shg_amount));
 
                 var aggregatedData = d3.nest()
+                    .key(function (d) {
+                        return d.bank+"-"+d.sub_bank;
+                    })
                     .key(function (d) {
                         return d.shg_name;
                     })
@@ -802,7 +805,6 @@
 
                 console.log(aggregatedData);
 
-
                         doc.setFontSize(12);
                         doc.text(150, 20, PSO);
 
@@ -815,13 +817,13 @@
 
                         doc.text(160, 55, 'Dated: ' + (moment(json[0]['ro_date']).format("DD-MM-YYYY")));
                         doc.text(37, 65, 'Sub:  Tamil Nadu Backward Classes Economic Development Corporation Ltd., Chennai 600008');
-                        doc.text(46, 70, 'Disbursement of Loan under ' + json[0]['loan_category'] + ' Payment sanctioned to ' + json[0]["no_of_beneficiaries"] + ' beneficiaries');
-                        doc.text(46, 75, 'through ' + json[0]["district_bank"] + ' - Final Sanction Order for Rs. ' + (NBCFDCShareCalculator(json[0]['loan_category'], json[0]['loan_amount'])+ tabcedcoShareCalculator(json[0]['loan_category'], json[0]['loan_amount'])) + ' - issued - Reg.');
+                        doc.text(46, 70, 'Disbursement of Loan under ' + json[0]['loan_category'] + ' Payment sanctioned to ' + total_ben_shg_count + ' beneficiaries');
+                        doc.text(46, 75, 'through ' + json[0]["district_bank"] + ' - Final Sanction Order for Rs. ' + sanction_amount + ' - issued - Reg.');
 
                         doc.text(37, 85, 'Ref:  1. The Deed of Agreement Dated: _______');
                         doc.text(46, 90, '2. The Joint Registrar of Co-Operative Societies, ' + json[0]['district'] + '.');
-                        doc.text(50, 95, 'Lr. No. 3009/Tabcedco/2011-12 NC(1). Dated: _______.');
-                        doc.text(50, 100, 'Screening Committee Date: _______');
+                        doc.text(50, 95, 'Lr. No. '+json[0]['jr_letter_number']+' Dated:' + (moment(json[0]['jr_letter_date']).format("DD-MM-YYYY")));
+                        doc.text(50, 100, 'Screening Committee Date:' + (moment(json[0]['screening_date']).format("DD-MM-YYYY")));
                         doc.text(100, 110, '**********');
 
                         doc.text(25, 120, 'ORDER:');
@@ -846,10 +848,20 @@
         //            [[json[0]['bank'], json[0]['shg1'].name, json[0]['shg1'].strength, json[0]['shg1'].amount]]; json[0]['no_of_shgs']
 
                         for (var i = 0; i < aggregatedData.length; i++) {
-                            rows.push([[json[0]['bank']], [[aggregatedData[i].key]], [[aggregatedData[i].values['total_members']]],
-                                [(NBCFDCShareCalculator(json[0]['loan_category'], aggregatedData[i].values['total_shg_loan'])+
-                                tabcedcoShareCalculator(json[0]['loan_category'], aggregatedData[i].values['total_shg_loan']))]]);
-                            total_strength += parseInt(aggregatedData[i].values['total_members']);
+                            for (var j = 0; j < aggregatedData[i].values.length; j++) {
+                                if (j === 0) {
+                                    rows.push([[aggregatedData[i].key], [[aggregatedData[i].values[j].key]], [[aggregatedData[i].values[j].values['total_members']]],
+                                        [(NBCFDCShareCalculator(json[0]['loan_category'], aggregatedData[i].values[j].values['total_shg_loan']) +
+                                        tabcedcoShareCalculator(json[0]['loan_category'], aggregatedData[i].values[j].values['total_shg_loan']))]]);
+                                    total_strength += parseInt(aggregatedData[i].values[j].values['total_members']);
+                                }
+                                else {
+                                    rows.push([[''], [[aggregatedData[i].values[j].key]], [[aggregatedData[i].values[j].values['total_members']]],
+                                        [(NBCFDCShareCalculator(json[0]['loan_category'], aggregatedData[i].values[j].values['total_shg_loan']) +
+                                        tabcedcoShareCalculator(json[0]['loan_category'], aggregatedData[i].values[j].values['total_shg_loan']))]]);
+                                    total_strength += parseInt(aggregatedData[i].values[j].values['total_members']);
+                                }
+                            }
                         }
 
                         rows.push([[['Grand Total']], [['']], [[total_strength]], [[sanction_amount]]]);
@@ -1068,12 +1080,14 @@
                 console.log(json);
                     // Checking if the loan category is either Micro Credit or Mahila Samriddhi Yojana
                     if (json[0]['loan_category'] === 'MCG (Micro-Credit Gents)' || json[0]['loan_category'] === 'MSY (Mahila Samriddhi Yojana)') {
-                        var PSO = json[0]['loan_number'] + '/' + cat + '/' + (moment(json[0]['received_date']).year() - 2000) + '' + (moment(json[0]['received_date']).year() - 1999);
+                        var PSO = json[0]['ro_number'] + '/' + cat + '/' + (moment(json[0]['received_date']).year() - 2000) + '' + (moment(json[0]['received_date']).year() - 1999);
 
                         var total_shg_amount = 0;
+                        var total_ben_shg_count = 0;
 
                         for (var abc = 0; abc < json.length; abc++) {
                             total_shg_amount += json[abc]['total_amount'];
+                            total_ben_shg_count += json[abc]['strength'];
                         }
 
                         var sanction_amount = (NBCFDCShareCalculator(json[0]['loan_category'], total_shg_amount)+ tabcedcoShareCalculator(json[0]['loan_category'], total_shg_amount));
@@ -1097,7 +1111,6 @@
 
                 console.log(aggregatedData);
 
-
                         doc.setFontSize(12);
                         doc.text(150, 20, PSO);
 
@@ -1108,15 +1121,15 @@
                         doc.text(65, 45, 'PRESENT: '+ MD +'., I.A.S.');
                         doc.text(25, 55, 'Proc.No.' + json[0]['ann_loan_id'] + '/' + json[0]['district'] + (moment(json[0]['received_date']).format("DDMM/YYYY")) + json[0]['bank']);
 
-                        doc.text(160, 55, 'Dated: ' );
+                        doc.text(160, 55, 'Dated: ');
                         doc.text(37, 65, 'Sub:  Tamil Nadu Backward Classes Economic Development Corporation Ltd., Chennai 600008');
-                        doc.text(46, 70, 'Disbursement of Loan under ' + json[0]['loan_category'] + ' Payment sanctioned to ' + json[0]["no_of_beneficiaries"] + ' beneficiaries');
-                        doc.text(46, 75, 'through ' + json[0]["district_bank"] + ' - Final Sanction Order for Rs. ' + (NBCFDCShareCalculator(json[0]['loan_category'], json[0]['loan_amount'])+ tabcedcoShareCalculator(json[0]['loan_category'], json[0]['loan_amount'])) + ' - issued - Reg.');
+                        doc.text(46, 70, 'Disbursement of Loan under ' + json[0]['loan_category'] + ' Payment sanctioned to ' + total_ben_shg_count + ' beneficiaries');
+                        doc.text(46, 75, 'through ' + json[0]["district_bank"] + ' - Final Sanction Order for Rs. ' + sanction_amount + ' - issued - Reg.');
 
                         doc.text(37, 85, 'Ref:  1. The Deed of Agreement Dated: _______');
                         doc.text(46, 90, '2. The Joint Registrar of Co-Operative Societies, ' + json[0]['district'] + '.');
-                        doc.text(50, 95, 'Lr. No. 3009/Tabcedco/2011-12 NC(1). Dated: _______.');
-                        doc.text(50, 100, 'Screening Committee Date: _______');
+                        doc.text(50, 95, 'Lr. No. '+json[0]['jr_letter_number']+' Dated:' + (moment(json[0]['jr_letter_date']).format("DD-MM-YYYY")));
+                        doc.text(50, 100, 'Screening Committee Date:' + (moment(json[0]['screening_date']).format("DD-MM-YYYY")));
                         doc.text(100, 110, '**********');
 
                         doc.text(25, 120, 'ORDER:');
@@ -1141,10 +1154,20 @@
         //            [[json[0]['bank'], json[0]['shg1'].name, json[0]['shg1'].strength, json[0]['shg1'].amount]]; json[0]['no_of_shgs']
 
                         for (var i = 0; i < aggregatedData.length; i++) {
-                            rows.push([[json[0]['bank']], [[aggregatedData[i].key]], [[aggregatedData[i].values['total_members']]],
-                                [(NBCFDCShareCalculator(json[0]['loan_category'], aggregatedData[i].values['total_shg_loan'])+
-                                tabcedcoShareCalculator(json[0]['loan_category'], aggregatedData[i].values['total_shg_loan']))]]);
-                            total_strength += parseInt(aggregatedData[i].values['total_members']);
+                            for (var j = 0; j < aggregatedData[i].values.length; j++) {
+                                if (j === 0) {
+                                    rows.push([[aggregatedData[i].key], [[aggregatedData[i].values[j].key]], [[aggregatedData[i].values[j].values['total_members']]],
+                                        [(NBCFDCShareCalculator(json[0]['loan_category'], aggregatedData[i].values[j].values['total_shg_loan']) +
+                                        tabcedcoShareCalculator(json[0]['loan_category'], aggregatedData[i].values[j].values['total_shg_loan']))]]);
+                                    total_strength += parseInt(aggregatedData[i].values[j].values['total_members']);
+                                }
+                                else {
+                                    rows.push([[''], [[aggregatedData[i].values[j].key]], [[aggregatedData[i].values[j].values['total_members']]],
+                                        [(NBCFDCShareCalculator(json[0]['loan_category'], aggregatedData[i].values[j].values['total_shg_loan']) +
+                                        tabcedcoShareCalculator(json[0]['loan_category'], aggregatedData[i].values[j].values['total_shg_loan']))]]);
+                                    total_strength += parseInt(aggregatedData[i].values[j].values['total_members']);
+                                }
+                            }
                         }
 
                         rows.push([[['Grand Total']], [['']], [[total_strength]], [[sanction_amount]]]);
